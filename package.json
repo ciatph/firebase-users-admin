@@ -1,0 +1,25 @@
+{
+  "name": "firebase-users-admin",
+  "version": "1.0.0",
+  "description": "API for Firebase Authentication users management using the firebase-admin SDK.",
+  "main": "index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ciatph/firebase-users-admin.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ciatph/firebase-users-admin/issues"
+  },
+  "homepage": "https://github.com/ciatph/firebase-users-admin#readme",
+  "dependencies": {
+    "cookie-parser": "^1.4.6",
+    "dotenv": "^16.0.0",
+    "express": "^4.17.3"
+  }
+}
