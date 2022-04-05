@@ -1,0 +1,16 @@
+{
+  "name": "Firebase Auth Users CRUD API",
+  "version": "1.0.0",
+  "description": "Documentation for the CRUD API of a Firebase Auth users management app",
+  "title": "Firebase Auth Users CRUD API",
+  "url": "http://localhost:3001/api",
+  "sampleUrl": "http://localhost:3001/api",
+  "header": {
+    "title": "Firebase Auth Users CRUD API"
+  },
+  "template": {
+    "withCompare": false,
+    "withFilter": false,
+    "showRequiredLabels": true
+  }
+}
