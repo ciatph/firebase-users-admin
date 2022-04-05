@@ -9,6 +9,10 @@ app.use(express.urlencoded({ extended: false }))
 app.use(cookieParser())
 app.use(express.static(path.resolve(__dirname, 'public')))
 
+app.get('/hello', (req, res) => {
+  res.status(200).send('OK!')
+})
+
 app.listen(PORT, () => {
   console.log(`listening on http://localhost:${PORT}`)
 })
