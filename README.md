@@ -67,7 +67,7 @@ The npm scripts listed below are available under the **/server** directory.
 
 ### `npm start`
 
-Run the express app (API only) in production mode. `npm run gen:docs` needs to run separately, if you'd also like to make the API documentation usage available in production mode.
+Run the express app (API only) in production mode. You'll need to `npm run gen:docs` if you haven't done so already, if you'd also like to view the API documentation usage in production mode.
 
 ### `npm run dev`
 
@@ -75,7 +75,7 @@ Run the express app (API only) in development mode.
 
 ### `npm run gen:docs`
 
-Builds the API documentation. The static website documentation files are put in the `/src/public` directory, and made available on `http://localhost:3001/docs`.
+Builds the API documentation. The static website documentation files are put in the `/src/public/docs` directory, and made available on `http://localhost:3001/docs`.
 
 ### `npm run seed`
 
