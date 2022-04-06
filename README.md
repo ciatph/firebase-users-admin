@@ -48,7 +48,10 @@ A basic web app client in the **/client** directory will show basic API usage an
    cd client
    npm install
    ```
-2. Run the app in development mode.  
+2. Replace `/client/utils/firebase/firebase.config.js` with your own Firebase project's web SDK setup configuration file.
+   - You can find this file in a Firebase project's  
+**Project Settings** -> **General** -> **Web apps** (Add an app if needed) -> **SDK setup and configuration**
+3. Run the app in development mode.  
 `npm start`
 3. Launch the client app in:  
 `http://localhost:3000`
