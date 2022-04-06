@@ -33,7 +33,7 @@ const {
  * @apiSuccess {String} metadata.lastSignInTime Date/time the user has last signed-in
  * @apiSuccess {String} metadata.creationTime Date/time the UserRecord was created
  * @apiSuccess {String} tokensValidAfterTime time remaining for the user's login token validity
- * @apiSuccess {Array} providerData public fields returned by Firebase Authentication's Email/Password Provider
+ * @apiSuccess {Object[]} providerData Object array of public fields returned by Firebase Authentication's Email/Password Provider
  * @apiSuccess {String} providerData.uid Unique Firebase user id
  * @apiSuccess {String} providerData.displayName user's display name/username
  * @apiSuccess {String} providerData.email User email

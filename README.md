@@ -46,5 +46,30 @@
 `http://localhost:3001/docs`
 
 
+## Available Scripts
+
+### `npm start`
+
+Run the express app (API only) in production mode. `npm run gen:docs` needs to run separately, if you'd also like to make the API documentation usage available in production mode.
+
+### `npm run dev`
+
+Run the express app (API only) in development mode.
+
+### `npm run gen:docs`
+
+Builds the API documentation. The static website documentation files are put in the `/src/public` directory, and made available on `http://localhost:3001/docs`.
+
+### `npm run seed`
+
+Creates an initial **superadmin** Firebase Authentication user with the credentials:  
+
+```
+email: superadmin@gmail.com
+displayname: Super Admin
+password: 123456789
+account_level: 1
+```
+
 @ciatph  
 20220406

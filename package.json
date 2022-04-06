@@ -7,6 +7,7 @@
     "start": "node src/index.js",
     "dev": "nodemon watch src/index.js",
     "gen:docs": "apidoc -i src/controllers/ -o src/public/docs/",
+    "seed": "node src/scripts/seeder.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

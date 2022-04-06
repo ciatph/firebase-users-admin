@@ -27,9 +27,7 @@ class User {
 
     if (user) {
       try {
-        await getAuth().setCustomUserClaims(user.uid, {
-          account_level: account_level
-        })
+        await getAuth().setCustomUserClaims(user.uid, { account_level })
       } catch (err) {
         throw new Error(err.message)
       }
