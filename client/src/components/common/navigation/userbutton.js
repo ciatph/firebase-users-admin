@@ -6,7 +6,8 @@ function UserButton (hasUser) {
     try {
       await signOut(auth)
     } catch (err) {
-      console.log(err.message)
+      // console.log(err.message)
+      throw new Error(err.message)
     }
   }
 

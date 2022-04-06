@@ -34,7 +34,6 @@ function LoginContainer (props) {
     } catch (err) {
       setLoadState(prev =>
         ({ ...prev, severity: 'error', title: 'Error', message: err.message }))
-      console.error(err.message)
     }
   }
 

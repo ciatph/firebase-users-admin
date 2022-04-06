@@ -23,12 +23,14 @@ const WithAuth = (Component) => {
             if (claims.account_level) {
               setUserValue(user, mounted)
             } else {
-              console.log('u y hav no claims!')
+              // console.error('u y hav no claims!')
               await signOut(auth)
-              console.log('begone!')
+              // console.error('begone!')
+              throw new Error('Invalid user.')
             }
           } catch (err) {
-            console.log(err.message)
+            // console.error(err.message)
+            throw new Error(err.message)
           }
         } else {
           setUserValue(null, mounted)

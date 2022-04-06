@@ -1,9 +1,14 @@
+import PropTypes from 'prop-types'
 import Dashboard from '../../components/dashboard'
 
-function DashboardContainer () {
+function DashboardContainer (props) {
   return (
-    <Dashboard />
+    <Dashboard user={props.currentUser} />
   )
+}
+
+DashboardContainer.propTypes = {
+  currentUser: PropTypes.object
 }
 
 export default DashboardContainer
