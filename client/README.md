@@ -5,7 +5,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 It aims to:
 
 - demosntrate a simple usage of the Firebase Authentication's CRUD API endpoints described in more detail on the root README.
-- demonstrate Firebase Auth user login/logout
+- demonstrate Firebase Auth user login/logout using the Firebase accounts created by a superadmin (from the CRUD API endpoints, or thru firebase-admin SDK)
 
 ## Available Scripts
 
@@ -21,3 +21,5 @@ Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 Builds the app for production to the `build` folder.\
 It correctly bundles React in production mode and optimizes the build for the best performance.
 
+@ciatph  
+20220406
