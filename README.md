@@ -53,9 +53,11 @@ A basic web app client in the **/client** directory will show basic API usage an
 2. Replace `/client/utils/firebase/firebase.config.js` with your own Firebase project's web SDK setup configuration file.
    - You can find this file in a Firebase project's  
 **Project Settings** -> **General** -> **Web apps** (Add an app if needed) -> **SDK setup and configuration**
-3. Run the app in development mode.  
+3. Create a `/client/.env` file from the `/client/.env.example` file.
+   - Replace `REACT_APP_BASE_URL` with the domain on which the CRUD API is running (default value is `http://localhost:3001/api` on localhost. See the [server](#server) set-up instructions for more information).
+4. Run the app in development mode.  
 `npm start`
-3. Launch the client app in:  
+5. Launch the client app in:  
 `http://localhost:3000`
 
 
