@@ -1,9 +1,10 @@
 name: Deploy to Development Environment
 
+# This workflow will trigger on any tag/release created on *any* branch
+# Make sure to create tags/releases only from the "master" branch for consistency
 on:
-  push:
-    branches: 
-      - master
+  release:
+    types: [published]
 
 jobs:
   lint-client:
@@ -79,12 +80,22 @@ jobs:
     name: Deploy Server to Heroku
     needs: lint-server
     runs-on: ubuntu-latest
+    env:
+      HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+      HEROKU_EMAIL: ${{ secrets.HEROKU_EMAIL }}
+      HEROKU_APP: ${{ secrets.HEROKU_APP }}
     steps:
       - name: Checkout the repository
         uses: actions/checkout@v1
-      - name: Use NodeJS ${{ matrix.node-version }}
-        uses: actions/setup-node@v2
-        with:
-          node-version: ${{ matrix.node-version }}
-      - name: Deploy to Heroku
-        run: git push -f https://heroku:${{ secrets.HEROKU_API_TOKEN }}@git.heroku.com/${{ secrets.HEROKU_APP }}.git origin/master:master
+      - run: |
+          cat >~/.netrc <<EOF
+          machine api.heroku.com
+            login $HEROKU_EMAIL
+            password $HEROKU_API_KEY
+          machine git.heroku.com
+            login $HEROKU_EMAIL
+            password $HEROKU_API_KEY
+          EOF
+      - run: heroku git:remote -a $HEROKU_APP
+      - run: git push heroku HEAD:refs/heads/master
+      - run: rm -r -f .netrc

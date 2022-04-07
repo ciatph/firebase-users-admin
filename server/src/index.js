@@ -18,6 +18,10 @@ app.use(cors({
 
 app.use('/api', controllers)
 
+app.get('/', (req, res) => {
+  res.status(200).send('OK!')
+})
+
 app.listen(PORT, () => {
   console.log(`listening on http://localhost:${PORT}`)
 })
