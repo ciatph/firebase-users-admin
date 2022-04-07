@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "API for Firebase Authentication users management using the firebase-admin SDK.",
   "main": "index.js",
+  "engines": {
+    "node": "14.x"
+  },
   "scripts": {
     "install": "cd server && npm install",
     "build": "cd server && npm run build",

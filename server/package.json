@@ -14,6 +14,7 @@
     "seed": "node src/scripts/seeder.js",
     "lint": "eslint src --ignore-path .gitignore",
     "lint:fix": "eslint --ignore-path .gitignore --fix src",
+    "copyclient": "node src/scripts/copyclient.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

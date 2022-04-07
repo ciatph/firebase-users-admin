@@ -64,21 +64,22 @@ A basic web app client in the **/client** directory will show basic API usage an
 ## Usage
 
 1. Navigate to the `/server` directory.
-2. Generate the API documentation.  
+2. Create a default Firebase Auth user.  
+`npm run seed`
+3. Generate the API documentation.  
 `npm run gen:docs`
-3. Run the app:  
+4. Run the app:  
    - (development mode) `npm run dev`
    - (production mode) `npm start`
-4. Read the API documentation and usage examples guide of available CRUD API endpoints on:  
+5. Read the API documentation and usage examples guide of available CRUD API endpoints on:  
 `http://localhost:3001/docs`
-5. Try to log-in to the `/client` app using the default superadmin seeded user:  
+6. Try to log-in to the `/client` app using the default superadmin seeded user from step no. 2:  
    ```
    username: superadmin@gmail.com
    password: 123456789
    ```
-6. Use the CRUD API endpoints to create/update/delete or view Firebase Auth users using Postman, curl, or other http clients.
+7. Use the CRUD API endpoints to create/update/delete or view Firebase Auth users using Postman, curl, or other http clients.
    - Try signing in these users to the `/client` app.
-
 
 
 ## Available Scripts - server
@@ -107,6 +108,17 @@ displayname: Super Admin
 password: 123456789
 account_level: 1
 ```
+
+### `npm run copyclient`
+
+Copies the built `/client` website from `/client/build` to the server's root directory.
+
+- It requires to build the client app first, after following its set-up [instructions](#client):  
+   ```
+   cd client
+   npm run build
+   ```
+- The built client app will be viewable on `http://localhost:3001` if the server is running.
 
 @ciatph  
 20220406
