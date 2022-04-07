@@ -7,7 +7,7 @@ CRUD API for Firebase Authentication users management using the firebase-admin S
 <p>Login using the default user credentials:</p>
 
 ```
-username: superamin@gmail.com
+username: superadmin@gmail.com
 password: 123456789
 ```
 

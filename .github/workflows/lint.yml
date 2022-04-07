@@ -1,6 +1,9 @@
 name: Lint Files
 
-on: [push]
+on:
+  push:
+    branches:
+      - '*'
 
 jobs:
   lint-client:
