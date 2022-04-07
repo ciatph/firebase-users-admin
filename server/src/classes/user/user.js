@@ -29,6 +29,13 @@ class User {
       } catch (err) {
         throw new Error(err.message)
       }
+
+      try {
+        // Fetch user with custom claims
+        user = await this.getuser({ uid: user.uid })
+      } catch (err) {
+        throw new Error(err.message)
+      }
     }
 
     return user
@@ -54,14 +61,20 @@ class User {
       } catch (err) {
         throw new Error(err.message)
       }
-    } else {
-      throw new Error('Nothing to update.')
     }
 
     // Update custom claims
     if (account_level) {
       try {
         await getAuth().setCustomUserClaims(uid, { account_level })
+      } catch (err) {
+        throw new Error(err.message)
+      }
+    }
+
+    if (!user) {
+      try {
+        user = await this.getuser({ uid })
       } catch (err) {
         throw new Error(err.message)
       }

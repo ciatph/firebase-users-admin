@@ -9,12 +9,14 @@ const {
   listUsers
 } = require('./user')
 
+const validFirebaseToken = require('../middleware/valid-token')
+
 // ----------------------------------------
 // USERS
 // ----------------------------------------
 
 /**
- * @api {post} /user Create Firebase user
+ * @api {post} /user Create Firebase User
  * @apiName createUser
  * @apiGroup User
  * @apiDescription Create a new Firebase Authentication user with given email
@@ -29,9 +31,11 @@ const {
  * @apiSuccess {String} emailVerified true|false account's email verification status
  * @apiSuccess {String} displayName user's display name/username
  * @apiSuccess {String} disabled true|false account is enabled or disabled
- * @apiSuccess {Object} metadata Miscellaneous User record information
+ * @apiSuccess {Object} metadata
  * @apiSuccess {String} metadata.lastSignInTime Date/time the user has last signed-in
  * @apiSuccess {String} metadata.creationTime Date/time the UserRecord was created
+ * @apiSuccess {Object} customClaims Custom created user parameters
+ * @apiSuccess {Object} customClaims.account_level account type: 1=superadmin, 2=admin
  * @apiSuccess {String} tokensValidAfterTime time remaining for the user's login token validity
  * @apiSuccess {Object[]} providerData Object array of public fields returned by Firebase Authentication's Email/Password Provider
  * @apiSuccess {String} providerData.uid Unique Firebase user id
@@ -46,7 +50,7 @@ const {
  *    account_level: 2
  *  })
  */
-router.post('/user', createUser)
+router.post('/user', validFirebaseToken, createUser)
 
 /**
  * @api {patch} /user Update UserRecord
@@ -62,9 +66,7 @@ router.post('/user', createUser)
  * @apiParam (Request Body) {Bool} [emailverified] true|false account's email verification status
  * @apiParam (Request Body) {Number} [account_level] account level for custom claims: 1=superadmin, 2=admin
  *
- * @apiSuccess {Object} UserRecord Firebase UserRecord (see the 200 success result of the `createUser` endpoint for more information)
- * @apiSuccess {Object} UserRecord.customClaims custom claims added to the UserRecord
- * @apiSuccess {Number} UserRecord.customClaims.account_level account level: 1=superadmin, 2=admin
+ * @apiSuccess {Object} UserRecord Firebase UserRecord (see the 200 success result of the `Create Firebase User` endpoint for more information)
  *
  * @apiExample {js} Example usage:
  * const result = await axios.patch('http://localhost:3001/api/user', {
@@ -73,7 +75,7 @@ router.post('/user', createUser)
  *    account_level: 2
  *  })
  */
-router.patch('/user', updateUser)
+router.patch('/user', validFirebaseToken, updateUser)
 
 /**
  * @api {delete} /user/:uid Delete UserRecord
@@ -89,7 +91,7 @@ router.patch('/user', updateUser)
  * @apiExample {js} Example usage:
  * await axios.delete('http://localhost:3001/api/user/6uHhmVfPdjb6MR4ad5v9Np38z733')
  */
-router.delete('/user/:uid', deleteUser)
+router.delete('/user/:uid', validFirebaseToken, deleteUser)
 
 /**
  * @api {get} /user Get UserRecord
@@ -101,7 +103,7 @@ router.delete('/user/:uid', deleteUser)
  * @apiParam (Request Query) {String} [uid] Unique Firebase user id
  * @apiParam (Request Query) {String} [email] User id
  *
- * @apiSuccess {Object} UserRecord Firebase UserRecord (see the 200 success result of the `updateUser` endpoint for more information)
+ * @apiSuccess {Object} UserRecord Firebase UserRecord (see the 200 success result of the `Create Firebase User` endpoint for more information)
  *
  * @apiExample {js} Example usage:
  * await axios.get('http://localhost:3001/api/user?uid=85EmjTGiT1cYakDC6VGZ8uaGgZN2')
@@ -117,7 +119,7 @@ router.get('/user', getUser)
  *
  * @apiSampleRequest off
  *
- * @apiSuccess {Object[]} users[] Array of Firebase UserRecords (see the 200 success result of the `updateUser` endpoint for more information)
+ * @apiSuccess {Object[]} users[] Array of Firebase UserRecords (see the 200 success result of the `Create Firebase User` endpoint for more information)
  *
  * @apiExample {js} Example usage:
  * await axios.get('http://localhost:3001/api/users')

@@ -2,7 +2,7 @@ const { getAuth } = require('../utils/db')
 
 // Check if a signed-in user's firebase ID token is valid
 // Inserts valid user data to the request object 'req.user'
-const validFirebaseToken = async (req, res) => {
+const validFirebaseToken = async (req, res, next) => {
   if (
     (!req.headers.authorization ||
       !req.headers.authorization.startsWith('Bearer ')) &&
@@ -32,10 +32,16 @@ const validFirebaseToken = async (req, res) => {
 
   try {
     const decodedIdToken = await getAuth().verifyIdToken(idToken)
-    console.log('ID Token correctly decoded', JSON.stringify(decodedIdToken))
 
+    /* Allow unconfirmed emails in the meantime
     if (!decodedIdToken.email_verified) {
       res.status(403).send('Unauthorized. Please confirm your email.')
+      return
+    }
+    */
+
+    if (decodedIdToken.account_level === undefined) {
+      res.status(403).send('Unauthorized. Missing custom claims.')
       return
     }
 
