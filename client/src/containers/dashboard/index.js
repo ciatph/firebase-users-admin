@@ -32,7 +32,7 @@ function DashboardContainer (props) {
 
   const onDeleteUser = async (uid) => {
     try {
-      setLoading({ ...loading, isLoading: true })
+      setLoading({ ...loading, ...defaultLoadingState, isLoading: true })
       await deleteUser(uid)
       const result = await getUsers()
       setState(prev => result.data.users)

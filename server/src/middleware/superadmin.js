@@ -1,5 +1,7 @@
 const { ACCOUNT_LEVEL } = require('../utils/constants')
 
+// Checks if a signed-in user is a superadmin
+// Requires the validFirebaseToken middleware
 const isSuperAdmin = async (req, res, next) => {
   let level = 0
 

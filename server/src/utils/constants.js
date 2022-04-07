@@ -3,6 +3,9 @@ const ACCOUNT_LEVEL = {
   ADMIN: 2
 }
 
+const EMAIL_WHITELIST = process.env.EMAIL_WHITELIST.split(',')
+
 module.exports = {
-  ACCOUNT_LEVEL
+  ACCOUNT_LEVEL,
+  EMAIL_WHITELIST
 }
