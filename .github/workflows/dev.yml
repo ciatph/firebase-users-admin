@@ -1,0 +1,90 @@
+name: Deploy to Development Environment
+
+on:
+  push:
+    branches: 
+      - master
+
+jobs:
+  lint-client:
+    name: Lint and Build client
+    runs-on: ubuntu-latest
+    env:
+      REACT_APP_BASE_URL: ${{ secrets.REACT_APP_BASE_URL }}
+    strategy:
+      matrix:
+        node-version: [14.x]
+    steps:
+      - name: Checkout the repository
+        uses: actions/checkout@v1
+      - name: Use NodeJS ${{ matrix.node-version }}
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: Install dependencies and lint
+        run: |
+          cd client
+          npm install
+          npm run lint
+      - name: Build client
+        run: |
+          cd client
+          npm run build
+      - name: Archive Development Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: build
+          path: |
+            client/build
+            client/.firebaserc
+            client/firebase.json
+          retention-days: 3
+
+  lint-server:
+    name: Lint Server
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [14.x]
+    steps:
+      - name: Checkout the repository
+        uses: actions/checkout@v1
+      - name: Use NodeJS ${{ matrix.node-version }}
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: Install Dependencies and lint
+        run: |
+          cd server
+          npm install
+          npm run lint
+
+  deploy-client:
+    name: Deploy Client to Firebase Hosting
+    needs: lint-client
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download Artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: build
+      - name: Deploy to Firebase
+        uses: w9jds/firebase-action@master
+        with:
+          args: deploy --only hosting:master
+        env:
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+
+  deploy-server:
+    name: Deploy Server to Heroku
+    needs: lint-server
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the repository
+        uses: actions/checkout@v1
+      - name: Use NodeJS ${{ matrix.node-version }}
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: Deploy to Heroku
+        run: git push -f https://heroku:${{ secrets.HEROKU_API_TOKEN }}@git.heroku.com/${{ secrets.HEROKU_APP }}.git origin/master:master

@@ -3,10 +3,14 @@
   "version": "1.0.0",
   "description": "API for Firebase Authentication users management using the firebase-admin SDK.",
   "main": "index.js",
+  "engines": {
+    "node": "14.x"
+  },
   "scripts": {
-    "start": "node src/index.js",
-    "dev": "nodemon watch src/index.js",
     "gen:docs": "apidoc -i src/controllers/ -o src/public/docs/",
+    "start": "node src/index.js",
+    "build": "npm run gen:docs",
+    "dev": "nodemon watch src/index.js",
     "seed": "node src/scripts/seeder.js",
     "lint": "eslint src --ignore-path .gitignore",
     "lint:fix": "eslint --ignore-path .gitignore --fix src",

@@ -1,0 +1,14 @@
+{
+  "projects": {
+    "default": "weaponsforge-dev"
+  },
+  "targets": {
+    "weaponsforge-dev": {
+      "hosting": {
+        "master": [
+          "fire-auth-users"
+        ]
+      }
+    }
+  }
+}

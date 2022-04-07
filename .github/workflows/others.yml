@@ -1,0 +1,45 @@
+name: Lint Files
+
+on:
+  push:
+    branches-ignore: 
+      - master
+
+jobs:
+  lint-client:
+    name: Lint Client
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [14.x]
+    steps:
+      - name: Checkout the repository
+        uses: actions/checkout@v1
+      - name: Use NodeJS ${{ matrix.node-version }}
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: Install Dependencies and lint
+        run: |
+          cd client
+          npm install
+          npm run lint
+
+  lint-server:
+    name: Lint Server
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [14.x]
+    steps:
+      - name: Checkout the repository
+        uses: actions/checkout@v1
+      - name: Use NodeJS ${{ matrix.node-version }}
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: Install Dependencies and lint
+        run: |
+          cd server
+          npm install
+          npm run lint          
