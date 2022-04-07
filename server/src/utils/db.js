@@ -9,8 +9,8 @@ if (process.env.FIREBASE_SERVICE_ACC === undefined || process.env.FIREBASE_PRIVA
 } else {
   const serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACC)
 
-  // Add double-quotes around the "private_key" JSON
-  serviceAccount.private_key = process.env.FIREBASE_PRIVATE_KEY
+  // Escape the "private_key" read by dotenv
+  serviceAccount.private_key = process.env.FIREBASE_PRIVATE_KEY.replace(/\\n/g, '\n')
 
   initializeApp({
     credential: credential.cert(serviceAccount)
