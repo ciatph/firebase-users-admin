@@ -40,6 +40,8 @@ A basic web app client in the **/client** directory will show basic API usage an
    - `FIREBASE_PRIVATE_KEY`
       - The `private_key` entry from the service account JSON file
       - Take note to make sure that the value starts and ends with a double-quote
+   - `ALLOWED_ORIGINS`
+      - IP/domain origins in comma-separated values that are allowed to access the API
 
 ### client
 
