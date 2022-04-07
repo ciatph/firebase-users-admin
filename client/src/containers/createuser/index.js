@@ -16,7 +16,7 @@ function CreateUserContainer () {
 
   const onInputChange = (e) => {
     const { id, value } = e.target
-    const key = (id !== undefined) ? id : 'accountlevel'
+    const key = (id !== undefined) ? id : 'account_level'
     setState({ ...state, [key]: value })
 
     if (loading.error !== '' || loading.message !== '') {
