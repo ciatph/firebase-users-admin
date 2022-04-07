@@ -91,4 +91,3 @@ jobs:
           node-version: ${{ matrix.node-version }}
       - name: Deploy to Heroku
         run: git push -f https://heroku:${{ secrets.HEROKU_API_TOKEN }}@git.heroku.com/${{ secrets.HEROKU_APP_STAGING }}.git origin/master:master
-s
