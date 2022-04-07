@@ -1,4 +1,5 @@
 import PropTypes from 'prop-types'
+import Button from '@mui/material/Button'
 import Card from '@mui/material/Card'
 import CardContent from '@mui/material/CardContent'
 import Skeleton from '@mui/material/Skeleton'
@@ -6,7 +7,7 @@ import Stack from '@mui/material/Stack'
 import AlertMessage from '../../components/common/alert_message'
 import styles from './styles'
 
-function Dashboard ({ currentUser, error, users }) {
+function Dashboard ({ currentUser, users, loadstatus, onBtnClick }) {
   return (
     <div>
       <h1>Dashboard</h1>
@@ -14,16 +15,17 @@ function Dashboard ({ currentUser, error, users }) {
       {currentUser &&
         <AlertMessage
           severity='success'
-          title='Success!'
+          title='Welcome!'
           message={`Welcome home, ${currentUser.email}!`}
         />}
 
-      {error !== '' &&
+      {(loadstatus.message !== '' || loadstatus.error !== '') &&
         <AlertMessage
-          severity='error'
-          title='Error'
-          message={error}
-        />}
+          severity={(loadstatus.error !== '') ? 'error' : 'success'}
+          title={(loadstatus.error !== '') ? 'Error' : 'Success'}
+          message={(loadstatus.error !== '') ? loadstatus.error : loadstatus.message}
+        />
+      }
 
       <h2>Firebase Auth Users</h2>
 
@@ -40,20 +42,30 @@ function Dashboard ({ currentUser, error, users }) {
 
         return <Card key={index} sx={styles.card}>
           <CardContent sx={styles.cardcontent}>
-            {fields.map((itm, idx) => (
-              <div key={idx}>
-                <span><strong>{itm}: </strong></span>
-                <span>{(item[itm] !== undefined ? item[itm].toString() : '-')}</span>
-              </div>
-            ))}
+            <div>
+              {fields.map((itm, idx) => (
+                <div key={idx}>
+                  <span><strong>{itm}: </strong></span>
+                  <span>{(item[itm] !== undefined ? item[itm].toString() : '-')}</span>
+                </div>
+              ))}
 
-            <span><strong>account_level: </strong></span>
-            <span>
-              {item.customClaims
-                ? item.customClaims.account_level
-                : 'n/a'
-              }
-            </span>
+              <span><strong>account_level: </strong></span>
+              <span>
+                {item.customClaims
+                  ? item.customClaims.account_level
+                  : 'n/a'
+                }
+              </span>
+            </div>
+            <div>
+              <Button
+                variant='contained'
+                size='small'
+                disabled={loadstatus.isLoading}
+                onClick={() => onBtnClick(item.uid)}
+              >Delete</Button>
+            </div>
           </CardContent>
         </Card>
       })}
@@ -63,8 +75,9 @@ function Dashboard ({ currentUser, error, users }) {
 
 Dashboard.propTypes = {
   currentUser: PropTypes.object,
-  error: PropTypes.string,
-  users: PropTypes.array
+  users: PropTypes.array,
+  loadstatus: PropTypes.object,
+  onBtnClick: PropTypes.func
 }
 
 export default Dashboard

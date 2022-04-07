@@ -1,11 +1,15 @@
 import { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 import Dashboard from '../../components/dashboard'
-import { getUsers } from '../../utils/service'
+import { getUsers, deleteUser } from '../../utils/service'
+
+const defaultLoadingState = {
+  isLoading: false, error: '', message: ''
+}
 
 function DashboardContainer (props) {
   const [state, setState] = useState([])
-  const [error, setError] = useState('')
+  const [loading, setLoading] = useState(defaultLoadingState)
 
   useEffect(() => {
     let loaded = true
@@ -17,7 +21,7 @@ function DashboardContainer (props) {
           setState(prev => result.data.users)
         }
       } catch (err) {
-        setError(err.message)
+        setLoading(prev => ({ ...prev, isLoading: false, error: err.response ? err.response.data : err.message }))
       }
     }
 
@@ -26,11 +30,24 @@ function DashboardContainer (props) {
     return () => (loaded = false)
   }, [])
 
+  const onDeleteUser = async (uid) => {
+    try {
+      setLoading({ ...loading, isLoading: true })
+      await deleteUser(uid)
+      const result = await getUsers()
+      setState(prev => result.data.users)
+      setLoading({ ...loading, isLoading: false, message: 'User deleted!' })
+    } catch (err) {
+      setLoading({ ...loading, isLoading: false, error: err.response ? err.response.data : err.message })
+    }
+  }
+
   return (
     <Dashboard
       currentUser={props.currentUser}
       users={state}
-      error={error}
+      loadstatus={loading}
+      onBtnClick={onDeleteUser}
     />
   )
 }
