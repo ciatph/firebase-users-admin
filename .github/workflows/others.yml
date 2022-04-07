@@ -1,9 +1,6 @@
 name: Lint Files
 
-on:
-  push:
-    branches-ignore: 
-      - ci-cd-server
+on: [push]
 
 jobs:
   lint-client:
