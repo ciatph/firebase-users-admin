@@ -4,6 +4,7 @@ import { auth, signOut } from '../../utils/firebase/firebase.config'
 const WithAuth = (Component) => {
   function AuthAwareComponent (props) {
     const [currentUser, setUser] = useState(null)
+    const [error, setError] = useState('')
 
     const setUserValue = (user, mounted) => {
       if (mounted) {
@@ -21,25 +22,24 @@ const WithAuth = (Component) => {
             const { claims } = await user.getIdTokenResult()
 
             if (claims.account_level) {
-              setUserValue(user, mounted)
+              setUserValue({ ...user, accountLevel: claims.account_level }, mounted)
             } else {
               // console.error('u y hav no claims!')
               await signOut(auth)
-              // console.error('begone!')
-              throw new Error('Invalid user.')
+              setError('Invalid user. Missing custom claims.')
             }
           } catch (err) {
-            // console.error(err.message)
-            throw new Error(err.message)
+            setError(err.message)
           }
         } else {
           setUserValue(null, mounted)
+          setError('')
         }
       })
       return () => (mounted = false)
     }, [])
 
-    return <Component {...props} currentUser={currentUser} />
+    return <Component {...props} authError={error} currentUser={currentUser} />
   }
 
   return AuthAwareComponent

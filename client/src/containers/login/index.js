@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { auth, signInWithEmailAndPassword } from '../../utils/firebase/firebase.config'
 import Login from '../../components/common/form'
@@ -16,6 +16,13 @@ function LoginContainer (props) {
   const [state, setState] = useState(defaultState)
   const [loadState, setLoadState] = useState(defaultStatus)
 
+  useEffect(() => {
+    if (props.authError !== '') {
+      setLoadState(prev =>
+        ({ ...prev, severity: 'error', title: 'Error', message: props.authError }))
+    }
+  }, [props.authError])
+
   const onInputChange = (e) => {
     const { id, value } = e.target
     setState(prev => ({ ...prev, [id]: value }))
@@ -28,9 +35,7 @@ function LoginContainer (props) {
   const signIn = async () => {
     try {
       const { email, password } = state
-      const result = await signInWithEmailAndPassword(auth, email, password)
-      setLoadState(prev =>
-        ({ ...prev, severity: 'success', title: 'Success', message: `Welcome aboard, ${result.user.email}!` }))
+      await signInWithEmailAndPassword(auth, email, password)
     } catch (err) {
       setLoadState(prev =>
         ({ ...prev, severity: 'error', title: 'Error', message: err.message }))
@@ -41,6 +46,7 @@ function LoginContainer (props) {
     <div>
       <Login
         hasUser={props.currentUser !== null}
+        authError={props.authError}
         onInputChange={onInputChange}
         onBtnClick={signIn}
       />
@@ -51,7 +57,8 @@ function LoginContainer (props) {
 }
 
 LoginContainer.propTypes = {
-  currentUser: PropTypes.object
+  currentUser: PropTypes.object,
+  authError: PropTypes.string
 }
 
 export default LoginContainer

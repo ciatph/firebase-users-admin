@@ -118,7 +118,7 @@ router.get('/user', getUser)
  *
  * @apiSampleRequest off
  *
- * @apiSuccess {Object[]} UserRecord[] Array of Firebase UserRecords (see the 200 success result of the `updateUser` endpoint for more information)
+ * @apiSuccess {Object[]} users[] Array of Firebase UserRecords (see the 200 success result of the `updateUser` endpoint for more information)
  *
  * @apiExample {js} Example usage:
  * await axios.get('http://localhost:3001/api/users')
