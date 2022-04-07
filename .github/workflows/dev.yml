@@ -3,7 +3,7 @@ name: Deploy to Development Environment
 on:
   push:
     branches: 
-      - ci-cd
+      - master
 
 jobs:
   lint-client:
