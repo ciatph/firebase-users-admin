@@ -1,5 +1,5 @@
 {
-  "name": "firebase-users-admin",
+  "name": "firebase-users-admin-server",
   "version": "1.0.0",
   "description": "API for Firebase Authentication users management using the firebase-admin SDK.",
   "main": "index.js",
