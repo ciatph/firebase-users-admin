@@ -16,7 +16,9 @@ export default class Service {
 
     try {
       token = await auth.currentUser.getIdToken(true)
-    } catch (err) {}
+    } catch (err) {
+      throw new Error(err.message)
+    }
 
     if (token) {
       obj.headers.Authorization = `Bearer ${token}`
@@ -78,8 +80,7 @@ export default class Service {
   }
 
   async deleteUser (uid) {
-    const params = { uid }
-    const obj = await this.createRequestObject({ params })
+    const obj = await this.createRequestObject({})
     const res = await axios.delete(`${this.USERS_API}/${uid}`, obj)
     return res.data
   }

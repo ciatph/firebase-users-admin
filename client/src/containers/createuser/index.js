@@ -30,7 +30,7 @@ function CreateUserContainer () {
       await createUser(state)
       setLoading({ ...loading, isLoading: false, message: 'User created!' })
     } catch (err) {
-      setLoading({ ...loading, isLoading: false, error: err.response.data })
+      setLoading({ ...loading, isLoading: false, error: err.response ? err.response.data : err.message })
     }
   }
 

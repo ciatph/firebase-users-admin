@@ -54,6 +54,7 @@ function CreateUser ({ state, loadstatus, onTextChange, onBtnClick }) {
       <Button
         variant='contained'
         sx={styles.button}
+        disabled={loadstatus.isLoading}
         onClick={onBtnClick}
       >Submit
       </Button>

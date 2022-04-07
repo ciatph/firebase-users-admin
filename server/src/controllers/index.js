@@ -21,6 +21,8 @@ const validFirebaseToken = require('../middleware/valid-token')
  * @apiGroup User
  * @apiDescription Create a new Firebase Authentication user with given email
  *
+ * @apiHeader {String} Authorization Bearer authorization value - signed-in user's firebase ID token.
+ *
  * @apiSampleRequest off
  * @apiParam (Request Body) {String} email User email
  * @apiParam (Request Body) {String} displayname Display name/username
@@ -44,11 +46,18 @@ const validFirebaseToken = require('../middleware/valid-token')
  * @apiSuccess {String} providerData.providerId Firebase Authentication Provider type
  *
  * @apiExample {js} Example usage:
- * const result = await axios.post('http://localhost:3001/api/user', {
- *    email: 'someonesemail@gmail.com',
- *    displayname: 'Some User',
- *    account_level: 2
- *  })
+ * const obj = {
+ *   data: {
+ *     email: 'someonesemail@gmail.com',
+ *     displayname: 'Some User',
+ *     account_level: 1
+ *   },
+ *   headers: {
+ *     Authorization: 'Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6IjZhNGY4N2Z....'
+ *   }
+ * }
+ *
+ * const result = await axios({ ...obj, url: 'http://localhost:3001/api/user', method: 'POST' })
  */
 router.post('/user', validFirebaseToken, createUser)
 
@@ -57,6 +66,8 @@ router.post('/user', validFirebaseToken, createUser)
  * @apiName updateUser
  * @apiGroup User
  * @apiDescription Update a Firebase Auth User's UserRecord by UID
+ *
+ * @apiHeader {String} Authorization Bearer authorization value - signed-in user's firebase ID token.
  *
  * @apiSampleRequest off
  * @apiParam (Request Body) {String} uid Unique Firebase user id
@@ -69,11 +80,18 @@ router.post('/user', validFirebaseToken, createUser)
  * @apiSuccess {Object} UserRecord Firebase UserRecord (see the 200 success result of the `Create Firebase User` endpoint for more information)
  *
  * @apiExample {js} Example usage:
- * const result = await axios.patch('http://localhost:3001/api/user', {
- *    uid: '85EmjTGiT1cYakDC6VGZ8uaGgZN2',
- *    displayname: 'Juan de la Cruz',
- *    account_level: 2
- *  })
+ * const obj = {
+ *   data: {
+ *     uid: '85EmjTGiT1cYakDC6VGZ8uaGgZN2',
+ *     displayname: 'Juan de la Cruz',
+ *     account_level: 2
+ *   },
+ *   headers: {
+ *     Authorization: 'Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6IjZhNGY4N2Z....'
+ *   }
+ * }
+ *
+ * const res = await axios({ ...obj, url: 'http://localhost:3001/api/user', method: 'PATCH' })
  */
 router.patch('/user', validFirebaseToken, updateUser)
 
@@ -83,13 +101,21 @@ router.patch('/user', validFirebaseToken, updateUser)
  * @apiGroup User
  * @apiDescription Delete a Firebase Auth User's UserRecord by UID
  *
+ * @apiHeader {String} Authorization Bearer authorization value - signed-in user's firebase ID token.
+ *
  * @apiSampleRequest off
  * @apiParam {String} uid Unique Firebase user id
  *
  * @apiSuccess {String} message Log message of successful user deletion.
  *
  * @apiExample {js} Example usage:
- * await axios.delete('http://localhost:3001/api/user/6uHhmVfPdjb6MR4ad5v9Np38z733')
+ * const obj = {
+ *   headers: {
+ *     Authorization: 'Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6IjZhNGY4N2Z....'
+ *   }
+ * }
+ *
+ * await axios.delete('http://localhost:3001/api/user/6uHhmVfPdjb6MR4ad5v9Np38z733', obj)
  */
 router.delete('/user/:uid', validFirebaseToken, deleteUser)
 
