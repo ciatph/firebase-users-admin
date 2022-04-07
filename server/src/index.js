@@ -18,8 +18,8 @@ app.use(cors({
 
 app.use('/api', controllers)
 
-app.get('/', (req, res) => {
-  res.status(200).send('OK!')
+app.get('*', (req, res) => {
+  res.sendFile(path.resolve(__dirname, 'public', 'index.html'))
 })
 
 app.listen(PORT, () => {
