@@ -45,7 +45,6 @@ const validFirebaseToken = async (req, res) => {
   } catch (error) {
     console.error('Error while verifying Firebase ID token:', error)
     res.status(403).send('Unauthorized')
-    return
   }
 }
 

@@ -4,14 +4,14 @@ const {
   deleteuser,
   getuser,
   listusers
-}= require('../classes/user')
+} = require('../classes/user')
 
 module.exports.createUser = async (req, res) => {
   const { email, displayname, account_level } = req.body
 
   if (!email || !displayname || !account_level) {
     return res.status(500).send('Missing parameter/s.')
-  }  
+  }
 
   try {
     const user = await createuser({ email, displayname, account_level })
@@ -58,7 +58,7 @@ module.exports.deleteUser = async (req, res) => {
 // Get user information by user's email or UID
 module.exports.getUser = async (req, res) => {
   const { uid, email } = req.query
-    
+
   if (!uid && !email) {
     return res.status(500).send('Missing parameter/s.')
   }

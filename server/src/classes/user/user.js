@@ -5,8 +5,6 @@ const { getAuth } = require('../../utils/db')
  * Intended for superadmin level accounts usage.
  */
 class User {
-  constructor () {}
-
   // Create a new User with custom claims
   async createuser (params) {
     const { email, displayname, account_level } = params
@@ -42,14 +40,14 @@ class User {
     const { uid, account_level } = params
     const info = {}
     let user
-      
+
     fields.forEach((item) => {
       const key = item.toLowerCase()
       if (params[key]) {
         info[item] = params[key]
       }
     })
-  
+
     if (Object.keys(info).length > 0) {
       try {
         user = await getAuth().updateUser(uid, info)

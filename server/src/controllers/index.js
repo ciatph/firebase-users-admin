@@ -109,7 +109,6 @@ router.delete('/user/:uid', deleteUser)
  */
 router.get('/user', getUser)
 
-
 /**
  * @api {get} /users List UserRecords
  * @apiName getUserList
