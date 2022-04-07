@@ -79,9 +79,6 @@ jobs:
     name: Deploy Server to Heroku
     needs: lint-server
     runs-on: ubuntu-latest
-    env:
-      HEROKU_API_TOKEN: ${{ secrets.HEROKU_API_TOKEN }}
-      HEROKU_APP: ${{ secrets.HEROKU_APP }}
     steps:
       - name: Checkout the repository
         uses: actions/checkout@v1
@@ -90,4 +87,4 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
       - name: Deploy to Heroku
-        run: git push -f https://heroku:${{ secrets.HEROKU_API_TOKEN }}@git.heroku.com/${{ secrets.HEROKU_APP_STAGING }}.git origin/master:master
+        run: git push -f https://heroku:${{ secrets.HEROKU_API_TOKEN }}@git.heroku.com/${{ secrets.HEROKU_APP }}.git origin/master:master
