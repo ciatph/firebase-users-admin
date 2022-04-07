@@ -3,7 +3,7 @@ name: Lint Files
 on:
   push:
     branches-ignore: 
-      - master
+      - ci-cd-server
 
 jobs:
   lint-client:
