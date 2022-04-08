@@ -42,6 +42,8 @@ A basic web app client in the **/client** directory will show basic API usage an
       - > **NOTE:** Take note to make sure that the value starts and ends with a double-quote on WINDOWS OS localhost. Some systems may or may not require the double-quotes (i.e., Ubuntu running on heroku).
    - `ALLOWED_ORIGINS`
       - IP/domain origins in comma-separated values that are allowed to access the API
+   - `EMAIL_WHITELIST`
+      - Comma-separated email addresses linked to Firebase Auth UserRecords that are not allowed to be deleted or updated (write-protected)
 
 ### client
 

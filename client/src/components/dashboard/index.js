@@ -1,4 +1,5 @@
 import PropTypes from 'prop-types'
+import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 import Card from '@mui/material/Card'
 import CardContent from '@mui/material/CardContent'
@@ -7,7 +8,7 @@ import Stack from '@mui/material/Stack'
 import AlertMessage from '../../components/common/alert_message'
 import styles from './styles'
 
-function Dashboard ({ currentUser, users, loadstatus, onBtnClick }) {
+function Dashboard ({ currentUser, users, loadstatus, onBtnClick, onBtnEditClick }) {
   return (
     <div>
       <h1>Dashboard</h1>
@@ -58,14 +59,22 @@ function Dashboard ({ currentUser, users, loadstatus, onBtnClick }) {
                 }
               </span>
             </div>
-            <div>
+            <Box>
               <Button
                 variant='contained'
                 size='small'
                 disabled={loadstatus.isLoading}
                 onClick={() => onBtnClick(item.uid)}
               >Delete</Button>
-            </div>
+
+              <Button
+                sx={styles.buttons}
+                variant='contained'
+                size='small'
+                disabled={loadstatus.isLoading}
+                onClick={() => onBtnEditClick(item)}
+              >Edit</Button>
+            </Box>
           </CardContent>
         </Card>
       })}
@@ -77,7 +86,8 @@ Dashboard.propTypes = {
   currentUser: PropTypes.object,
   users: PropTypes.array,
   loadstatus: PropTypes.object,
-  onBtnClick: PropTypes.func
+  onBtnClick: PropTypes.func,
+  onBtnEditClick: PropTypes.func
 }
 
 export default Dashboard

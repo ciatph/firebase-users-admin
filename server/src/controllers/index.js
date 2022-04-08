@@ -9,8 +9,11 @@ const {
   listUsers
 } = require('./user')
 
-const validFirebaseToken = require('../middleware/valid-token')
-const isSuperAdmin = require('../middleware/superadmin')
+const {
+  validFirebaseToken,
+  isSuperAdmin,
+  isProtected
+} = require('../middleware')
 
 // ----------------------------------------
 // USERS
@@ -94,7 +97,7 @@ router.post('/user', validFirebaseToken, isSuperAdmin, createUser)
  *
  * const res = await axios({ ...obj, url: 'http://localhost:3001/api/user', method: 'PATCH' })
  */
-router.patch('/user', validFirebaseToken, isSuperAdmin, updateUser)
+router.patch('/user', validFirebaseToken, isSuperAdmin, isProtected, updateUser)
 
 /**
  * @api {delete} /user/:uid Delete UserRecord
@@ -118,7 +121,7 @@ router.patch('/user', validFirebaseToken, isSuperAdmin, updateUser)
  *
  * await axios.delete('http://localhost:3001/api/user/6uHhmVfPdjb6MR4ad5v9Np38z733', obj)
  */
-router.delete('/user/:uid', validFirebaseToken, isSuperAdmin, deleteUser)
+router.delete('/user/:uid', validFirebaseToken, isSuperAdmin, isProtected, deleteUser)
 
 /**
  * @api {get} /user Get UserRecord

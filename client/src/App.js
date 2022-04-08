@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types'
-import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 import Container from '@mui/material/Container'
 import Navigation from './components/common/navigation'
 import WithAuth from './containers/login/withauth'

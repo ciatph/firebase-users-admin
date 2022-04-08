@@ -9,6 +9,12 @@ const styles = {
     '& span': {
       fontSize: '14px'
     }
+  },
+  buttons: {
+    display: 'flex',
+    flexDirection: 'column',
+    marginTop: (theme) => theme.spacing(1),
+    width: '100%'
   }
 }
 
