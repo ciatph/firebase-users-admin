@@ -6,15 +6,20 @@ const {
   listusers
 } = require('../classes/user')
 
+const { EMAIL_WHITELIST } = require('../utils/constants')
+
 module.exports.createUser = async (req, res) => {
-  const { email, displayname, account_level } = req.body
+  const { email, displayname, account_level, emailverified, disabled } = req.body
 
   if (!email || !displayname || !account_level) {
     return res.status(500).send('Missing parameter/s.')
   }
 
   try {
-    const user = await createuser({ email, displayname, account_level })
+    const user = await createuser({
+      email, displayname, account_level, emailverified, disabled
+    })
+
     return res.status(200).json(user)
   } catch (err) {
     return res.status(500).send(err.message)

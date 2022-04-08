@@ -50,11 +50,11 @@ export default class Service {
   }
 
   async createUser (user) {
-    const fields = ['email', 'displayname', 'account_level']
+    const fields = ['email', 'displayname', 'account_level', 'disabled', 'emailverified']
     const body = {}
 
     fields.forEach((item) => {
-      if (user[item]) {
+      if (user[item] !== undefined) {
         body[item] = user[item]
       }
     })
@@ -65,11 +65,11 @@ export default class Service {
   }
 
   async updateUser (info) {
-    const fields = ['uid', 'displayname', 'disabled', 'emailverified', 'account_level']
+    const fields = ['uid', 'email', 'displayname', 'disabled', 'emailverified', 'account_level']
     const body = {}
 
     fields.forEach((item) => {
-      if (info[item.toLowerCase()]) {
+      if (info[item.toLowerCase()] !== undefined) {
         body[item] = info[item.toLowerCase()]
       }
     })
