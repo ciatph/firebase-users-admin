@@ -9,14 +9,17 @@ const {
 const { EMAIL_WHITELIST } = require('../utils/constants')
 
 module.exports.createUser = async (req, res) => {
-  const { email, displayname, account_level } = req.body
+  const { email, displayname, account_level, emailverified, disabled } = req.body
 
   if (!email || !displayname || !account_level) {
     return res.status(500).send('Missing parameter/s.')
   }
 
   try {
-    const user = await createuser({ email, displayname, account_level })
+    const user = await createuser({
+      email, displayname, account_level, emailverified, disabled
+    })
+
     return res.status(200).json(user)
   } catch (err) {
     return res.status(500).send(err.message)
@@ -45,16 +48,6 @@ module.exports.deleteUser = async (req, res) => {
 
   if (!uid) {
     return res.status(500).send('Missing UID.')
-  }
-
-  try {
-    // Check if account is protected
-    const user = await getuser({ uid })
-    if (EMAIL_WHITELIST.includes(user.email)) {
-      return res.status(403).send('The resource you are trying to access is write-protected.')
-    }
-  } catch (err) {
-    return res.status(500).send(err.message)
   }
 
   try {

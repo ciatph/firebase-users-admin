@@ -7,17 +7,17 @@ const { getAuth } = require('../../utils/db')
 class User {
   // Create a new User with custom claims
   async createuser (params) {
-    const { email, displayname, account_level } = params
+    const { email, displayname, account_level, emailverified, disabled } = params
     let user
 
     try {
       user = await getAuth()
         .createUser({
           email,
-          emailVerified: false,
+          emailVerified: (emailverified !== undefined) ? emailverified : false,
           password: '123456789',
           displayName: displayname,
-          disabled: false
+          disabled: (disabled !== undefined) ? disabled : false
         })
     } catch (err) {
       throw new Error(err.message)
@@ -25,7 +25,8 @@ class User {
 
     if (user) {
       try {
-        await getAuth().setCustomUserClaims(user.uid, { account_level })
+        const acclevel = (account_level !== undefined) ? account_level : 2
+        await getAuth().setCustomUserClaims(user.uid, { account_level: acclevel })
       } catch (err) {
         throw new Error(err.message)
       }
@@ -50,7 +51,7 @@ class User {
 
     fields.forEach((item) => {
       const key = item.toLowerCase()
-      if (params[key]) {
+      if (params[key] !== undefined) {
         info[item] = params[key]
       }
     })

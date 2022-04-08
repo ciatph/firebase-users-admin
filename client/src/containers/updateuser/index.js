@@ -1,5 +1,6 @@
 import { useState } from 'react'
-import { createUser } from '../../utils/service'
+import { useLocation } from 'react-router-dom'
+import { updateUser } from '../../utils/service'
 import UserForm from '../../components/common/userform'
 
 const defaultState = {
@@ -10,8 +11,9 @@ const defaultLoadingState = {
   isLoading: false, error: '', message: ''
 }
 
-function CreateUserContainer () {
-  const [state, setState] = useState(defaultState)
+function UpdateUserContainer () {
+  const location = useLocation()
+  const [state, setState] = useState(location?.state || defaultState)
   const [loading, setLoading] = useState(defaultLoadingState)
 
   const onInputChange = (e) => {
@@ -28,11 +30,11 @@ function CreateUserContainer () {
     }
   }
 
-  const createNewUser = async () => {
+  const onBtnUpdateClick = async () => {
     try {
       setLoading({ ...loading, isLoading: true })
-      await createUser(state)
-      setLoading(prev => ({ ...defaultLoadingState, message: 'User created!' }))
+      await updateUser(state)
+      setLoading(prev => ({ ...defaultLoadingState, message: 'User info updated.' }))
     } catch (err) {
       setLoading(prev => ({ ...defaultLoadingState, error: err.response ? err.response.data : err.message }))
     }
@@ -40,16 +42,17 @@ function CreateUserContainer () {
 
   return (
     <div>
-      <h1>Create User</h1>
+      <h1>Update User</h1>
 
       <UserForm
         state={state}
         loadstatus={loading}
         onTextChange={onInputChange}
-        onBtnClick={createNewUser}
+        onBtnClick={onBtnUpdateClick}
+        type='update'
       />
     </div>
   )
 }
 
-export default CreateUserContainer
+export default UpdateUserContainer

@@ -2,10 +2,9 @@ const { EMAIL_WHITELIST } = require('../utils/constants')
 const { getuser } = require('../classes/user')
 
 // Reject the request if the uid's associated email is included in the whitelist
-// Requires the validFirebaseToken middleware
 const isProtected = async (req, res, next) => {
   let uid = req.body.uid ?? ''
-  uid = req.params.uid ?? ''
+  uid = req.params.uid ?? uid
 
   try {
     // Check if account is protected

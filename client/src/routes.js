@@ -1,6 +1,7 @@
 import DashboardContainer from './containers/dashboard'
 import LoginContainer from './containers/login'
 import CreateUserContainer from './containers/createuser'
+import UpdateUserContainer from './containers/updateuser'
 import Home from './components/home'
 
 const routes = [
@@ -18,6 +19,11 @@ const routes = [
     path: '/create',
     isProtected: true,
     component: CreateUserContainer
+  },
+  {
+    path: '/edit',
+    isProtected: true,
+    component: UpdateUserContainer
   },
   {
     path: '/',
