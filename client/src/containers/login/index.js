@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
-import { auth, signInWithEmailAndPassword } from '../../utils/firebase/firebase.config'
+import { useAuth } from '../../utils/firebase/auth'
 import Login from '../../components/common/form'
 import AlertMessage from '../../components/common/alert_message'
 
@@ -15,6 +15,7 @@ const defaultStatus = {
 function LoginContainer (props) {
   const [state, setState] = useState(defaultState)
   const [loadState, setLoadState] = useState(defaultStatus)
+  const auth = useAuth()
 
   useEffect(() => {
     if (props.authError !== '') {
@@ -35,7 +36,7 @@ function LoginContainer (props) {
   const signIn = async () => {
     try {
       const { email, password } = state
-      await signInWithEmailAndPassword(auth, email, password)
+      await auth.signIn({ email, password })
     } catch (err) {
       setLoadState(prev =>
         ({ ...prev, severity: 'error', title: 'Error', message: err.message }))

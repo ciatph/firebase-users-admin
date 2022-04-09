@@ -5,13 +5,16 @@ import Navigation from './components/common/navigation'
 import WithAuth from './containers/login/withauth'
 import PrivateRoute from './containers/routes/privateroute'
 import PublicRoute from './containers/routes/publicroute'
+import { useAuth } from '../src/utils/firebase/auth'
 import routes from './routes'
 
 function App (props) {
+  const auth = useAuth()
+
   return (
     <Container maxWidth='sm'>
       <Router>
-        <Navigation currentUser={props.currentUser} />
+        <Navigation currentUser={auth.currentUser} />
 
         <Routes>
           {routes.filter(route => route.component)
