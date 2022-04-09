@@ -16,29 +16,10 @@ function App (props) {
         <Routes>
           {routes.filter(route => route.component)
             .map(({ path, isProtected, component: Component }, idx) => {
-              const SettledRoute = () => {
-                if (isProtected) {
-                  return <PrivateRoute
-                    Component={Component}
-                    isProtected={isProtected}
-                    idx={idx}
-                    {...props}
-                  />
-                } else {
-                  return <PublicRoute
-                    Component={Component}
-                    idx={idx}
-                    path={path}
-                    {...props}
-                  />
-                }
-              }
-
-              return <Route
-                key={idx}
-                path={path}
-                element={SettledRoute()}
-              />
+              const FinalRoute = (isProtected)
+                ? <PrivateRoute idx={idx} Component={Component} {...props} />
+                : <PublicRoute idx={idx} Component={Component} path={path} {...props} />
+              return <Route key={idx} path={path} element={FinalRoute} />
             })}
         </Routes>
       </Router>

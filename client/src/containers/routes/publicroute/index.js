@@ -6,18 +6,15 @@ import { Navigate } from 'react-router-dom'
 function PublicRoute ({ Component, idx, path, ...props }) {
   if (props.currentUser) {
     if (['/login'].includes(path)) {
-      return <Navigate
-        key={idx}
+      return <Navigate key={idx}
         to={{
           pathname: '/dashboard',
           state: { from: props.location }
         }} />
-    } else {
-      return <Component {...props} />
     }
-  } else {
     return <Component {...props} />
   }
+  return <Component {...props} />
 }
 
 PublicRoute.propTypes = {
