@@ -42,6 +42,7 @@ A basic web app client in the **/client** directory will show basic API usage an
       - > **NOTE:** Take note to make sure that the value starts and ends with a double-quote on WINDOWS OS localhost. Some systems may or may not require the double-quotes (i.e., Ubuntu running on heroku).
    - `ALLOWED_ORIGINS`
       - IP/domain origins in comma-separated values that are allowed to access the API
+      - Include `http://localhost:3000` by default to allow CORS access to the `/client` app.
    - `EMAIL_WHITELIST`
       - Comma-separated email addresses linked to Firebase Auth UserRecords that are not allowed to be deleted or updated (write-protected)
 
@@ -82,6 +83,7 @@ A basic web app client in the **/client** directory will show basic API usage an
    ```
 7. Use the CRUD API endpoints to create/update/delete or view Firebase Auth users using Postman, curl, or other http clients.
    - Try signing in these users to the `/client` app.
+   - > **NOTE:** Comment out the `cors` options line `app.use(cors(corsOptions))` on **/server/src/index.js** when testing on Postman and other http clients other than the `/client` app.
 
 
 ## Available Scripts - server
