@@ -19,4 +19,6 @@ password: 123456789
 
 - [firebase-auth-users](https://github.com/ciatph/firebase-users-admin) (GitHub repo)
 - [Firebase Authentication](https://firebase.google.com/docs/auth)
-- [Firebase Admin](https://firebase.google.com/docs/admin/setup)
+- Firebase Admin SDK
+   - [set-up](https://firebase.google.com/docs/admin/setup)
+   - [manage users](https://firebase.google.com/docs/auth/admin/manage-users)
