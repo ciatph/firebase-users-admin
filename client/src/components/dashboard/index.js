@@ -59,7 +59,7 @@ function Dashboard ({ currentUser, users, loadstatus, onBtnClick, onBtnEditClick
                 }
               </span>
             </div>
-            <Box>
+            <Box sx={styles.buttons}>
               <Button
                 variant='contained'
                 size='small'
@@ -68,7 +68,6 @@ function Dashboard ({ currentUser, users, loadstatus, onBtnClick, onBtnEditClick
               >Delete</Button>
 
               <Button
-                sx={styles.buttons}
                 variant='contained'
                 size='small'
                 disabled={loadstatus.isLoading}

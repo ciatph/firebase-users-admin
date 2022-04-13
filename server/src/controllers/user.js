@@ -6,11 +6,8 @@ const {
   listusers
 } = require('../classes/user')
 
-const { EMAIL_WHITELIST } = require('../utils/constants')
-
-module.exports.createUser = async (req, res) => {
+module.exports.createUser = async (req, res, next) => {
   const { email, displayname, account_level, emailverified, disabled } = req.body
-
   if (!email || !displayname || !account_level) {
     return res.status(500).send('Missing parameter/s.')
   }
@@ -22,12 +19,12 @@ module.exports.createUser = async (req, res) => {
 
     return res.status(200).json(user)
   } catch (err) {
-    return res.status(500).send(err.message)
+    next(new Error(err))
   }
 }
 
 // Update a user's information by email or UID
-module.exports.updateUser = async (req, res) => {
+module.exports.updateUser = async (req, res, next) => {
   const { uid } = req.body
 
   if (!uid) {
@@ -38,12 +35,12 @@ module.exports.updateUser = async (req, res) => {
     const user = await updateuser(req.body)
     return res.status(200).json(user)
   } catch (err) {
-    return res.status(500).send(err.message)
+    next(new Error(err))
   }
 }
 
 // Delete a user by UID
-module.exports.deleteUser = async (req, res) => {
+module.exports.deleteUser = async (req, res, next) => {
   const { uid } = req.params
 
   if (!uid) {
@@ -56,12 +53,12 @@ module.exports.deleteUser = async (req, res) => {
       message: `User ${uid} deleted.`
     })
   } catch (err) {
-    return res.status(500).send(err.message)
+    next(new Error(err))
   }
 }
 
 // Get user information by user's email or UID
-module.exports.getUser = async (req, res) => {
+module.exports.getUser = async (req, res, next) => {
   const { uid, email } = req.query
 
   if (!uid && !email) {
@@ -72,16 +69,16 @@ module.exports.getUser = async (req, res) => {
     const user = await getuser({ uid, email })
     return res.status(200).json(user)
   } catch (err) {
-    return res.status(500).send(err.message)
+    next(new Error(err))
   }
 }
 
 // List all users
-module.exports.listUsers = async (req, res) => {
+module.exports.listUsers = async (req, res, next) => {
   try {
     const users = await listusers()
     return res.status(200).json(users)
   } catch (err) {
-    return res.status(500).send(err.message)
+    next(new Error(err))
   }
 }

@@ -6,20 +6,22 @@ const app = express()
 const PORT = process.env.PORT || 3001
 
 const controllers = require('./controllers')
-const { whitelist } = require('./utils/whitelist-cors')
+const { corsOptions } = require('./utils/whitelist-cors')
 
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 app.use(cookieParser())
 app.use(express.static(path.resolve(__dirname, 'public')))
-app.use(cors({
-  origin: whitelist
-}))
+app.use(cors(corsOptions))
 
 app.use('/api', controllers)
 
 app.get('*', (req, res) => {
-  res.sendFile(path.resolve(__dirname, 'public', 'index.html'))
+  return res.sendFile(path.resolve(__dirname, 'public', 'index.html'))
+})
+
+app.use((err, req, res, next) => {
+  res.status(500).send(err.message)
 })
 
 app.listen(PORT, () => {

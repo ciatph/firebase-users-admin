@@ -1,4 +1,6 @@
 node_modules/
-.env
-.vscode
 src/public/
+.env
+.env.dev
+.env.prod
+.vscode

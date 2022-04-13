@@ -5,6 +5,10 @@ const styles = {
   cardcontent: {
     width: '100%',
     display: 'flex',
+    flexDirection: {
+      xs: 'column',
+      sm: 'row'
+    },
     justifyContent: 'space-between',
     '& span': {
       fontSize: '14px'
@@ -13,8 +17,10 @@ const styles = {
   buttons: {
     display: 'flex',
     flexDirection: 'column',
-    marginTop: (theme) => theme.spacing(1),
-    width: '100%'
+    gap: (theme) => theme.spacing(1),
+    '& button': {
+      width: '100%'
+    }
   }
 }
 
