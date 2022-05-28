@@ -18,7 +18,7 @@ A basic web app client in the **/client** directory will show basic API usage an
 
 1. [firebase-admin](https://www.npmjs.com/package/firebase-admin) v10.0.2
 2. [Firebase Authentication](https://firebase.google.com/docs/auth) (using Email/Password Provider)
-3. React 18 (CRA) on client app
+3. React 18.1.0 (CRA) on client app
 
 
 ## Installation
