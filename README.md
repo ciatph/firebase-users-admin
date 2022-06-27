@@ -4,6 +4,17 @@
 
 A basic web app client in the **/client** directory will show basic API usage and demonstration.
 
+## Content
+
+- [Requirements](#requirements)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Available Scripts - server](#available-scripts---server)
+- [Installation and Usage Using Docker](#installation-and-usage-using-docker)
+  - [Docker for Localhost Development](#docker-for-localhost-development)
+  - [Docker for Production Deployment](#docker-for-production-deployment)
+- [References](#references)
+
 ## Requirements
 
 1. Windows 10, MacOS, Linux
@@ -57,6 +68,7 @@ A basic web app client in the **/client** directory will show basic API usage an
    - You can find this file in a Firebase project's  
 **Project Settings** -> **General** -> **Web apps** (Add an app if needed) -> **SDK setup and configuration**
 3. Create a `/client/.env` file from the `/client/.env.example` file.
+   - The `firebase.config.js` settings must match with the `FIREBASE_SERVICE_ACC` environment variable provided on **server - step # 3.**
    - Replace `REACT_APP_BASE_URL` with the domain on which the CRUD API is running (default value is `http://localhost:3001/api` on localhost. See the [server](#server) set-up instructions for more information).
 4. Run the app in development mode.  
 `npm start`
@@ -84,7 +96,6 @@ A basic web app client in the **/client** directory will show basic API usage an
 7. Use the CRUD API endpoints to create/update/delete or view Firebase Auth users using Postman, curl, or other http clients.
    - Try signing in these users to the `/client` app.
    - > **NOTE:** Comment out the `cors` options line `app.use(cors(corsOptions))` on **/server/src/index.js** when testing on Postman and other http clients other than the `/client` app.
-
 
 ## Available Scripts - server
 
@@ -123,6 +134,53 @@ Copies the built `/client` website from `/client/build` to the server's root dir
    npm run build
    ```
 - The built client app will be viewable on `http://localhost:3001` if the server is running.
+
+
+## Installation and Usage Using Docker
+
+We can use Docker to run dockerized **client** and **server** apps for local development. The following methods require Docker and Docker compose correctly installed and set up on your development machine.
+
+### Docker for Localhost Development
+
+1. Set-up the environment variables and firebase configuration file for the **/client** app.
+   - Create (your own) `firebase.config.js` file under `/client/utils/firebase/firebase.config.js` as advised on [**Installation - client # 2**](#client).
+   - Create the `.env` file under the **/client** directory as advised on [**Installation - client # 3**](#client).
+2. Set-up the environment variables for the **/server** app.
+   - Create the `.env` file under the **/server** directory as advised on [**Installation - server # 3**](#server).
+3. Build the client and server docker services for localhost development.  
+   - `docker-compose -f docker-compose-dev.yml build`
+   - > **INFO:** Building the images for localhost development takes a while, around ~7min+.
+4. Create and start the client and server containers.  
+`docker-compose -f docker-compose-dev.yml up`
+5. Launch the dockerized (dev) client app on  
+`http://localhost:3000`
+6. Launch the dockerized (dev) server app's API documentation on  
+`http://localhost:3001/docs`
+7. Edit source the codes in `/client/src` or `/server/src` as needed. Verify that hot reload is working on both the client and server apps.
+8. Stop and remove containers, networks, images and volumes:  
+`docker-compose -f docker-compose-dev.yml down`
+
+### Docker for Production Deployment
+
+The following docker-compose commands build small client and server images targeted for creating optimized dockerized apps running on production servers. Hot reload is not available when editing source codes from `/client/src` or `/server/src`.
+
+1. Install and set up the required environment variables as with the required variables on **Docker for Localhost Development**.
+2. Build the client and server docker services for production deployment.  
+   - `docker-compose -f docker-compose-prod.yml build`
+3. At this point, we can opt to push the docker images to a docker registry of your choice. (Requires sign-in to the selected docker registry).
+   - `docker-compose -f docker-compose-prod.yml push`
+4. Create and start the client and server containers.  
+`docker-compose -f docker-compose-prod.yml up`
+5. Launch the dockerized (prod) client app on  
+`http://localhost:3000`
+6. Launch the dockerized (prod) server app's API documentation on  
+`http://localhost:3001/docs`
+7. Stop and remove containers, networks, images and volumes:  
+`docker-compose -f docker-compose-prod.yml down`
+
+## References
+
+[[1]](https://docs.docker.com/compose/reference/) - docker compose commands
 
 @ciatph  
 20220406

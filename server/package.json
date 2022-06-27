@@ -7,7 +7,8 @@
     "node": "14.x"
   },
   "scripts": {
-    "gen:docs": "apidoc -i src/controllers/ -o src/public/docs/",
+    "gen:docs": "apidoc -i src/controllers/ -o public/docs/",
+    "pm2": "pm2 start process.json --no-daemon",
     "start": "node src/index.js",
     "build": "npm run gen:docs",
     "dev": "nodemon watch src/index.js",
@@ -28,20 +29,21 @@
   },
   "homepage": "https://github.com/ciatph/firebase-users-admin#readme",
   "dependencies": {
-    "apidoc": "^0.51.0",
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
     "dotenv": "^16.0.0",
     "express": "^4.17.3",
     "firebase-admin": "^10.0.2",
-    "nodemon": "^2.0.15"
+    "pm2": "^5.2.0"
   },
   "devDependencies": {
+    "apidoc": "^0.51.1",
     "eslint": "^8.12.0",
     "eslint-config-standard": "^16.0.3",
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^6.0.0",
-    "eslint-plugin-standard": "^5.0.0"
+    "eslint-plugin-standard": "^5.0.0",
+    "nodemon": "^2.0.18"
   }
 }
