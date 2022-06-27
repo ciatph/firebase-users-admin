@@ -143,10 +143,10 @@ We can use Docker to run dockerized **client** and **server** apps for local dev
 ### Docker for Localhost Development
 
 1. Set-up the environment variables and firebase configuration file for the **/client** app.
-   - Create (your own) `firebase.config.js` file under `/client/utils/firebase/firebase.config.js` as advised on **Installation - client # 2.**
-   - Create the `.env` file under the **/client** directory as advised on **Installation - client # 3.**
+   - Create (your own) `firebase.config.js` file under `/client/utils/firebase/firebase.config.js` as advised on [**Installation - client # 2**](#client).
+   - Create the `.env` file under the **/client** directory as advised on [**Installation - client # 3**](#client).
 2. Set-up the environment variables for the **/server** app.
-   - Create the `.env` file under the **/server** directory as advised on **Installation - server # 3.**
+   - Create the `.env` file under the **/server** directory as advised on [**Installation - server # 3**](#server).
 3. Build the client and server docker services for localhost development.  
    - `docker-compose -f docker-compose-dev.yml build`
    - > **INFO:** Building the images for localhost development takes a while, around ~7min+.
@@ -171,9 +171,9 @@ The following docker-compose commands build small client and server images targe
    - `docker-compose -f docker-compose-prod.yml push`
 4. Create and start the client and server containers.  
 `docker-compose -f docker-compose-prod.yml up`
-5. Launch the dockerized (dev) client app on  
+5. Launch the dockerized (prod) client app on  
 `http://localhost:3000`
-6. Launch the dockerized (dev) server app's API documentation on  
+6. Launch the dockerized (prod) server app's API documentation on  
 `http://localhost:3001/docs`
 7. Stop and remove containers, networks, images and volumes:  
 `docker-compose -f docker-compose-prod.yml down`
