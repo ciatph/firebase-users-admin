@@ -16,6 +16,12 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       - name: Checkout the repository
         uses: actions/checkout@v1
+      - name: Create temporary env variables
+        # Replace these files with actual values during
+        # runtime on 'docker-compose up'
+        run: |
+          cp client/.env.example client/.env
+          cp server/.env.example server/.env
       - name: Build Images
         run: docker-compose -f docker-compose.prod.yml build
       - name: Push Images to Docker Hub
