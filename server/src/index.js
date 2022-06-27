@@ -11,13 +11,13 @@ const { corsOptions } = require('./utils/whitelist-cors')
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 app.use(cookieParser())
-app.use(express.static(path.resolve(__dirname, 'public')))
+app.use(express.static(path.resolve(__dirname, '..', 'public')))
 app.use(cors(corsOptions))
 
 app.use('/api', controllers)
 
 app.get('*', (req, res) => {
-  return res.sendFile(path.resolve(__dirname, 'public', 'index.html'))
+  return res.sendFile(path.resolve(__dirname, '..', 'public', 'index.html'))
 })
 
 app.use((err, req, res, next) => {

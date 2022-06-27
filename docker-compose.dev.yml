@@ -1,0 +1,30 @@
+version: "2.6.0"
+services:
+  client-dev:
+    container_name: client-dev
+    image: ciatphdev/firebase-users-admin-client:dev
+    env_file:
+      - ./client/.env
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+      target: development
+    volumes:
+      - ./client/public:/opt/client/public
+      - ./client/src:/opt/client/src
+    ports:
+      - "3000:3000"
+
+  server-dev:
+    container_name: server-dev
+    image: ciatphdev/firebase-users-admin-server:dev
+    env_file:
+      - ./server/.env
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+      target: development
+    volumes:
+      - ./server/src:/opt/server/src
+    ports:
+      - "3001:3001"
