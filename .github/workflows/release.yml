@@ -101,6 +101,7 @@ jobs:
       - run: rm -r -f .netrc
 
   docker-build-push:
+    name: Deploy to Docker Hub
     runs-on: ubuntu-latest
     steps:
       - name: Login to Docker Hub

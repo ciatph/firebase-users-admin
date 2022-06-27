@@ -13,6 +13,7 @@ A basic web app client in the **/client** directory will show basic API usage an
 - [Installation and Usage Using Docker](#installation-and-usage-using-docker)
   - [Docker for Localhost Development](#docker-for-localhost-development)
   - [Docker for Production Deployment](#docker-for-production-deployment)
+   - [Pre-built Server Docker Image](#pre-built-server-docker-image)
 - [References](#references)
 
 ## Requirements
@@ -177,6 +178,32 @@ The following docker-compose commands build small client and server images targe
 `http://localhost:3001/docs`
 7. Stop and remove containers, networks, images and volumes:  
 `docker-compose -f docker-compose-prod.yml down`
+
+## Pre-built Server Docker Image
+
+**firebase-users-admin**'s `server` component is available as a stand-alone docker image on Docker Hub.
+
+1. Pull the (production) **/server** docker image from Docker Hub.  
+   `docker pull ciatphdev/firebase-users-admin-server:v1.1.0`
+2. Create a `.env` file.  
+   - Read [**Installation - server #3**](#server) for more information.
+   - Replace the variables accordingly in the `.env` file.
+      ```
+      ALLOWED_ORIGINS=http://localhost,http://localhost:3000,http://mywebsite.com,http://yourwebsite.com
+      FIREBASE_SERVICE_ACC=YOUR-FIREBASE-PROJ-SERVICE-ACCOUNT-JSON-CREDENTIALS-ONE-LINER-NO-SPACES
+      FIREBASE_PRIVATE_KEY=PRIVATE-KEY-FROM-FIREBASE-SERVICE-ACCOUNT-JSON-WITH-DOUBLE-QUOTES
+      EMAIL_WHITELIST=superadmin@gmail.com
+      ```
+3. Run the image.
+   ```
+   docker run -it --rm \
+      --env-file .env
+      -p 3001:3001 \
+      ciatphdev/firebase-users-admin-server:v1.1.0
+   ```
+4. Launch the server API documentation on  
+`http://localhost:3001/docs`
+
 
 ## References
 
