@@ -1,7 +1,7 @@
 version: "2.6.0"
 services:
-  client:
-    container_name: client
+  client-prod:
+    container_name: client-prod
     image: ciatphdev/firebase-users-admin-client:latest
     env_file:
       - ./client/.env
@@ -12,8 +12,8 @@ services:
     ports:
       - "3000:3000"
 
-  server:
-    container_name: server
+  server-prod:
+    container_name: server-prod
     image: ciatphdev/firebase-users-admin-server:latest
     env_file:
       - ./server/.env
