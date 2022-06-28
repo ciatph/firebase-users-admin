@@ -10,7 +10,9 @@
     "install": "cd server && npm install",
     "postinstall": "cd server && npm run seed",
     "build": "cd server && npm run build",
-    "start": "cd server && npm start"
+    "start": "cd server && npm start",
+    "heroku-prebuild": "cd server && npm i apidoc -P",
+    "heroku-postbuild": "cd server && npm run build"
   },
   "repository": {
     "type": "git",
