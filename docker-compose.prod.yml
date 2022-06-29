@@ -11,6 +11,8 @@ services:
       context: ./client
       dockerfile: Dockerfile
       target: production
+    networks:
+      - firebase-users-admin
     ports:
       - "3000:3000"
 
@@ -25,5 +27,12 @@ services:
       context: ./server
       dockerfile: Dockerfile
       target: production
+    networks:
+      - firebase-users-admin
     ports:
       - "3001:3001"
+
+networks:
+  firebase-users-admin:
+    name: firebase-users-admin
+    external: false
