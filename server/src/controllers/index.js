@@ -30,12 +30,14 @@ const {
  * @apiSampleRequest off
  * @apiParam (Request Body) {String} email User email
  * @apiParam (Request Body) {String} displayname Display name/username
+ * @apiParam (Request Body) {String} password User's password
  * @apiParam (Request Body) {Number} account_level account level for custom claims: 1=superadmin, 2=admin
  *
  * @apiSuccess {String} uid Unique Firebase user id
  * @apiSuccess {String} email User email
  * @apiSuccess {String} emailVerified true|false account's email verification status
  * @apiSuccess {String} displayName user's display name/username
+ * @apiSuccess {String} password User's password
  * @apiSuccess {String} disabled true|false account is enabled or disabled
  * @apiSuccess {Object} metadata
  * @apiSuccess {String} metadata.lastSignInTime Date/time the user has last signed-in
@@ -54,6 +56,7 @@ const {
  *   data: {
  *     email: 'someonesemail@gmail.com',
  *     displayname: 'Some User',
+ *     password: '123456789'
  *     account_level: 1
  *   },
  *   headers: {
@@ -77,6 +80,7 @@ router.post('/user', validFirebaseToken, isSuperAdmin, createUser)
  * @apiParam (Request Body) {String} uid Unique Firebase user id
  * @apiParam (Request Body) {String} [email] User email
  * @apiParam (Request Body) {String} [displayname] Display name/username
+ * @apiParam (Request Body) {String} [password] User's password
  * @apiParam (Request Body) {Bool} [disabled] true|false account is enabled or disabled
  * @apiParam (Request Body) {Bool} [emailverified] true|false account's email verification status
  * @apiParam (Request Body) {Number} [account_level] account level for custom claims: 1=superadmin, 2=admin
@@ -88,6 +92,7 @@ router.post('/user', validFirebaseToken, isSuperAdmin, createUser)
  *   data: {
  *     uid: '85EmjTGiT1cYakDC6VGZ8uaGgZN2',
  *     displayname: 'Juan de la Cruz',
+ *     password: '123456789',
  *     account_level: 2
  *   },
  *   headers: {

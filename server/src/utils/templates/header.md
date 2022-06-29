@@ -22,7 +22,7 @@ firebase-users-admin's server component, hosting all the listed endpoints below 
 1. Pull the (production) **/server** docker image from Docker Hub.  
    `docker pull ciatphdev/firebase-users-admin-server:v1.1.1`
 2. Create a `.env` file.  
-   - Read [**Installation - server #3**](https://github.com/ciatph/firebase-users-admin/tree/docker-fixing#server) for more information.
+   - Read [**Installation - server #3**](https://github.com/ciatph/firebase-users-admin#server) for more information.
    - Replace the variables accordingly in the `.env` file.
       ```
       ALLOWED_ORIGINS=http://localhost,http://localhost:3000,http://mywebsite.com,http://yourwebsite.com
