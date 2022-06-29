@@ -7,14 +7,14 @@ const {
 } = require('../classes/user')
 
 module.exports.createUser = async (req, res, next) => {
-  const { email, displayname, account_level, emailverified, disabled } = req.body
-  if (!email || !displayname || !account_level) {
+  const { email, displayname, password, account_level, emailverified, disabled } = req.body
+  if (!email || !displayname || !account_level || !password) {
     return res.status(500).send('Missing parameter/s.')
   }
 
   try {
     const user = await createuser({
-      email, displayname, account_level, emailverified, disabled
+      email, displayname, password, account_level, emailverified, disabled
     })
 
     return res.status(200).json(user)

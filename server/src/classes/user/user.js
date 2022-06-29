@@ -7,7 +7,7 @@ const { getAuth } = require('../../utils/db')
 class User {
   // Create a new User with custom claims
   async createuser (params) {
-    const { email, displayname, account_level, emailverified, disabled } = params
+    const { email, displayname, password, account_level, emailverified, disabled } = params
     let user
 
     try {
@@ -15,7 +15,7 @@ class User {
         .createUser({
           email,
           emailVerified: (emailverified !== undefined) ? emailverified : false,
-          password: '123456789',
+          password: password ?? '123456789',
           displayName: displayname,
           disabled: (disabled !== undefined) ? disabled : false
         })
@@ -44,14 +44,14 @@ class User {
 
   // Update a user's information by email or UID
   async updateuser (params) {
-    const fields = ['email', 'displayName', 'disabled', 'emailVerified']
+    const fields = ['email', 'password', 'displayName', 'disabled', 'emailVerified']
     const { uid, account_level } = params
     const info = {}
     let user
 
     fields.forEach((item) => {
       const key = item.toLowerCase()
-      if (params[key] !== undefined) {
+      if (params[key] !== undefined && params[key] !== '') {
         info[item] = params[key]
       }
     })

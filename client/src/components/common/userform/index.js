@@ -51,6 +51,16 @@ function UserForm (props) {
         onChange={onTextChange}
       />
 
+      <TextField
+        id='password'
+        label='Enter password'
+        variant='outlined'
+        size='small'
+        disabled={loadstatus.isLoading}
+        value={state.password}
+        onChange={onTextChange}
+      />
+
       <InputLabel sx={styles.formlabel} id='accountlevel-label'>Account Type</InputLabel>
       <Select
         labelId='accountlevel-label'

@@ -12,7 +12,10 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 app.use(cookieParser())
 app.use(express.static(path.resolve(__dirname, '..', 'public')))
-app.use(cors(corsOptions))
+
+if (process.env.ALLOW_CORS === '1') {
+  app.use(cors(corsOptions))
+}
 
 app.use('/api', controllers)
 

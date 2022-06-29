@@ -1,5 +1,6 @@
-version: "2.6.0"
+version: "3"
 services:
+  # Create React App (CRA) running on development mode
   client-dev:
     container_name: client-dev
     image: ciatphdev/firebase-users-admin-client:dev
@@ -15,6 +16,7 @@ services:
     ports:
       - "3000:3000"
 
+  # Express app running in development mode with auto reload using nodemon
   server-dev:
     container_name: server-dev
     image: ciatphdev/firebase-users-admin-server:dev
