@@ -187,7 +187,7 @@ The following docker-compose commands build small client and server images targe
 **firebase-users-admin**'s `server` component is available as a stand-alone docker image on Docker Hub with customizable environment variables (.env file).
 
 1. Pull the (production) **/server** docker image from Docker Hub.  
-   `docker pull ciatphdev/firebase-users-admin-server:v1.1.0`
+   `docker pull ciatphdev/firebase-users-admin-server:v1.1.1`
 2. Create a `.env` file.  
    - Read [**Installation - server #3**](#server) for more information.
    - Replace the variables accordingly in the `.env` file.
@@ -203,7 +203,7 @@ The following docker-compose commands build small client and server images targe
    docker run -it --rm \
       --env-file .env
       -p 3001:3001 \
-      ciatphdev/firebase-users-admin-server:v1.1.0
+      ciatphdev/firebase-users-admin-server:v1.1.1
    ```
 4. Run a script in the container to create the default `superadmin@gmail.com` account, if it does not yet exist in the Firestore database.  
    `docker exec -it server-prod npm run seed`
