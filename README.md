@@ -164,9 +164,9 @@ We can use Docker to run dockerized **client** and **server** apps for local dev
 
 ### Docker for Production Deployment
 
-The following docker-compose commands build small client and server images targeted for creating optimized dockerized apps running on production servers. Hot reload is not available when editing source codes from `/client/src` or `/server/src`.
+The following docker-compose commands build small client and server images targeted for creating optimized dockerized apps running on self-managed production servers. Hot reload is not available when editing source codes from `/client/src` or `/server/src`.
 
-1. Install and set up the required environment variables as with the required variables on **Docker for Localhost Development**.
+1. Install and set up the required **client** and **server** environment variables as with the required variables on [**Docker for Localhost Development**](#docker-for-localhost-development).
 2. Build the client and server docker services for production deployment.  
    - `docker-compose -f docker-compose-prod.yml build`
 3. At this point, we can opt to push the docker images to a docker registry of your choice. (Requires sign-in to the selected docker registry).
