@@ -1,8 +1,10 @@
 version: "3"
 services:
+  # Built Create React App (CRA) website running on nginx
   client-prod:
     container_name: client-prod
     image: ciatphdev/firebase-users-admin-client:latest
+    restart: always
     env_file:
       - ./client/.env
     build:
@@ -12,9 +14,11 @@ services:
     ports:
       - "3000:3000"
 
+  # Express app that restarts itself on errors using pm2
   server-prod:
     container_name: server-prod
     image: ciatphdev/firebase-users-admin-server:latest
+    restart: always
     env_file:
       - ./server/.env
     build:

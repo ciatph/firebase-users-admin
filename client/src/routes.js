@@ -2,6 +2,7 @@ import DashboardContainer from './containers/dashboard'
 import LoginContainer from './containers/login'
 import CreateUserContainer from './containers/createuser'
 import UpdateUserContainer from './containers/updateuser'
+import NotFound from './components/404'
 import Home from './components/home'
 
 const routes = [
@@ -29,6 +30,11 @@ const routes = [
     path: '/',
     isProtected: false,
     component: Home
+  },
+  {
+    path: '*',
+    isProtected: false,
+    component: NotFound
   }
 ]
 

@@ -50,12 +50,14 @@ export default class Service {
   }
 
   async createUser (user) {
-    const fields = ['email', 'displayname', 'account_level', 'disabled', 'emailverified']
+    const fields = ['email', 'displayname', 'password', 'account_level', 'disabled', 'emailverified']
     const body = {}
 
     fields.forEach((item) => {
-      if (user[item] !== undefined) {
+      if (user[item] !== undefined && user[item] !== '') {
         body[item] = user[item]
+      } else {
+        throw new Error('Please check your input.')
       }
     })
 
@@ -65,12 +67,14 @@ export default class Service {
   }
 
   async updateUser (info) {
-    const fields = ['uid', 'email', 'displayname', 'disabled', 'emailverified', 'account_level']
+    const fields = ['uid', 'email', 'displayname', 'password', 'disabled', 'emailverified', 'account_level']
     const body = {}
 
     fields.forEach((item) => {
-      if (info[item.toLowerCase()] !== undefined) {
+      if (info[item.toLowerCase()] !== undefined && info[item.toLowerCase()] !== '') {
         body[item] = info[item.toLowerCase()]
+      } else {
+        throw new Error('Please check your input.')
       }
     })
 
