@@ -201,7 +201,7 @@ The following docker-compose commands build small client and server images targe
 3. Run the image.
    ```
    docker run -it --rm \
-      --env-file .env
+      --env-file .env \
       -p 3001:3001 \
       ciatphdev/firebase-users-admin-server:v1.1.1
    ```
