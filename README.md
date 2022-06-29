@@ -44,19 +44,14 @@ A basic web app client in the **/client** directory will show basic API usage an
    cd server
    npm install
    ```
-3. Set up the environment variables. Create a `.env` file inside the **/server** directory with reference to the `.env.example` file. Encode your own Firebase project settings on the following variables:
-   -  `FIREBASE_SERVICE_ACC`
-      -  The project's private key file contents, condensed into one line and minus all whitespace characters.
-      -  The service account JSON file is generated from the Firebase project's **Project Settings** page, on  
-        **Project Settings** -> **Service accounts** -> **Generate new private key**
-   - `FIREBASE_PRIVATE_KEY`
-      - The `private_key` entry from the service account JSON file
-      - > **NOTE:** Take note to make sure that the value starts and ends with a double-quote on WINDOWS OS localhost. Some systems may or may not require the double-quotes (i.e., Ubuntu running on heroku).
-   - `ALLOWED_ORIGINS`
-      - IP/domain origins in comma-separated values that are allowed to access the API
-      - Include `http://localhost:3000` by default to allow CORS access to the `/client` app.
-   - `EMAIL_WHITELIST`
-      - Comma-separated email addresses linked to Firebase Auth UserRecords that are not allowed to be deleted or updated (write-protected)
+3. Set up the environment variables. Create a `.env` file inside the **/server** directory with reference to the `.env.example` file. Encode your own Firebase project settings on the following variables:  
+
+   | Variable Name | Description |
+   | --- | --- |
+   | `FIREBASE_SERVICE_ACC` | The project's private key file contents, condensed into one line and minus all whitespace characters.<br><br>The service account JSON file is generated from the Firebase project's **Project Settings** page, on **Project Settings** -> **Service accounts** -> **Generate new private key**|
+   | `FIREBASE_PRIVATE_KEY` | The `private_key` entry from the service account JSON file.<br> <blockquote> **NOTE:** Take note to make sure that the value starts and ends with a double-quote on WINDOWS OS localhost. Some systems may or may not require the double-quotes (i.e., Ubuntu running on heroku).</blockquote> |
+   |`ALLOWED_ORIGINS`|IP/domain origins in comma-separated values that are allowed to access the API. Include `http://localhost:3000` by default to allow CORS access to the `/client` app.|
+   |`EMAIL_WHITELIST`| Comma-separated email addresses linked to Firebase Auth UserRecords that are not allowed to be deleted or updated (write-protected)<br><br>Default value is `superadmin@gmail.com`|
 
 ### client
 
@@ -153,12 +148,14 @@ We can use Docker to run dockerized **client** and **server** apps for local dev
    - > **INFO:** Building the images for localhost development takes a while, around ~7min+.
 4. Create and start the client and server containers.  
 `docker-compose -f docker-compose-dev.yml up`
-5. Launch the dockerized (dev) client app on  
+5. Run a script in the container to create the default `superadmin@gmail.com` account, if it does not yet exist in the Firestore database.  
+   `docker exec -it server-prod npm run seed`
+6. Launch the dockerized (dev) client app on  
 `http://localhost:3000`
-6. Launch the dockerized (dev) server app's API documentation on  
+7. Launch the dockerized (dev) server app's API documentation on  
 `http://localhost:3001/docs`
-7. Edit source the codes in `/client/src` or `/server/src` as needed. Verify that hot reload is working on both the client and server apps.
-8. Stop and remove containers, networks, images and volumes:  
+8. Edit source the codes in `/client/src` or `/server/src` as needed. Verify that hot reload is working on both the client and server apps.
+9. Stop and remove containers, networks, images and volumes:  
 `docker-compose -f docker-compose-dev.yml down`
 
 ### Docker for Production Deployment
@@ -172,16 +169,18 @@ The following docker-compose commands build small client and server images targe
    - `docker-compose -f docker-compose-prod.yml push`
 4. Create and start the client and server containers.  
 `docker-compose -f docker-compose-prod.yml up`
-5. Launch the dockerized (prod) client app on  
+5. Run a script in the container to create the default `superadmin@gmail.com` account, if it does not yet exist in the Firestore database.  
+   `docker exec -it server-prod npm run seed`
+6. Launch the dockerized (prod) client app on  
 `http://localhost:3000`
-6. Launch the dockerized (prod) server app's API documentation on  
+7. Launch the dockerized (prod) server app's API documentation on  
 `http://localhost:3001/docs`
-7. Stop and remove containers, networks, images and volumes:  
+8. Stop and remove containers, networks, images and volumes:  
 `docker-compose -f docker-compose-prod.yml down`
 
 ## Pre-built Server Docker Image
 
-**firebase-users-admin**'s `server` component is available as a stand-alone docker image on Docker Hub.
+**firebase-users-admin**'s `server` component is available as a stand-alone docker image on Docker Hub with customizable environment variables (.env file).
 
 1. Pull the (production) **/server** docker image from Docker Hub.  
    `docker pull ciatphdev/firebase-users-admin-server:v1.1.0`
@@ -201,7 +200,9 @@ The following docker-compose commands build small client and server images targe
       -p 3001:3001 \
       ciatphdev/firebase-users-admin-server:v1.1.0
    ```
-4. Launch the server API documentation on  
+4. Run a script in the container to create the default `superadmin@gmail.com` account, if it does not yet exist in the Firestore database.  
+   `docker exec -it server-prod npm run seed`
+5. Launch the server API documentation on  
 `http://localhost:3001/docs`
 
 
