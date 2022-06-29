@@ -48,10 +48,11 @@ A basic web app client in the **/client** directory will show basic API usage an
 
    | Variable Name | Description |
    | --- | --- |
-   | `FIREBASE_SERVICE_ACC` | The project's private key file contents, condensed into one line and minus all whitespace characters.<br><br>The service account JSON file is generated from the Firebase project's **Project Settings** page, on **Project Settings** -> **Service accounts** -> **Generate new private key**|
-   | `FIREBASE_PRIVATE_KEY` | The `private_key` entry from the service account JSON file.<br> <blockquote> **NOTE:** Take note to make sure that the value starts and ends with a double-quote on WINDOWS OS localhost. Some systems may or may not require the double-quotes (i.e., Ubuntu running on heroku).</blockquote> |
-   |`ALLOWED_ORIGINS`|IP/domain origins in comma-separated values that are allowed to access the API. Include `http://localhost:3000` by default to allow CORS access to the `/client` app.|
-   |`EMAIL_WHITELIST`| Comma-separated email addresses linked to Firebase Auth UserRecords that are not allowed to be deleted or updated (write-protected)<br><br>Default value is `superadmin@gmail.com`|
+   |FIREBASE_SERVICE_ACC| The project's private key file contents, condensed into one line and minus all whitespace characters.<br><br>The service account JSON file is generated from the Firebase project's **Project Settings** page, on **Project Settings** -> **Service accounts** -> **Generate new private key**|
+   |FIREBASE_PRIVATE_KEY| The `private_key` entry from the service account JSON file.<br> <blockquote> **NOTE:** Take note to make sure that the value starts and ends with a double-quote on WINDOWS OS localhost. Some systems may or may not require the double-quotes (i.e., Ubuntu running on heroku).</blockquote> |
+   |ALLOWED_ORIGINS|IP/domain origins in comma-separated values that are allowed to access the API. Include `http://localhost:3000` by default to allow CORS access to the `/client` app.|
+   |EMAIL_WHITELIST| Comma-separated email addresses linked to Firebase Auth UserRecords that are not allowed to be deleted or updated (write-protected)<br><br>Default value is `superadmin@gmail.com`|
+   |ALLOW_CORS|Allow Cross-Origin Resource Sharing (CORS) on the API endpoints.<br><br>Default value is `1`. Setting to `0` will make all endpoints accept requests from all domains, including Postman.|
 
 ### client
 
@@ -60,12 +61,15 @@ A basic web app client in the **/client** directory will show basic API usage an
    cd client
    npm install
    ```
-2. Replace `/client/utils/firebase/firebase.config.js` with your own Firebase project's web SDK setup configuration file.
+2. Replace the `/client/utils/firebase/firebase.config.js` file with your own Firebase project's web SDK setup configuration file.
    - You can find this file in a Firebase project's  
 **Project Settings** -> **General** -> **Web apps** (Add an app if needed) -> **SDK setup and configuration**
-3. Create a `/client/.env` file from the `/client/.env.example` file.
-   - The `firebase.config.js` settings must match with the `FIREBASE_SERVICE_ACC` environment variable provided on **server - step # 3.**
-   - Replace `REACT_APP_BASE_URL` with the domain on which the CRUD API is running (default value is `http://localhost:3001/api` on localhost. See the [server](#server) set-up instructions for more information).
+   - The `firebase.config.js` settings must match with the `FIREBASE_SERVICE_ACC` environment variable defined on **server - step # 3.**
+3. Create a `/client/.env` file from the `/client/.env.example` file. Replace the `REACT_APP_BASE_URL` variable with an appropriate value.  
+
+   | Variable Name | Description |
+   | --- | --- |
+   |REACT_APP_BASE_URL|Domain on which the CRUD API is running.<br><br> Default value is `http://localhost:3001/api` on localhost. See the [server](#server) set-up instructions for more information.|
 4. Run the app in development mode.  
 `npm start`
 5. Launch the client app in:  
@@ -192,6 +196,7 @@ The following docker-compose commands build small client and server images targe
       FIREBASE_SERVICE_ACC=YOUR-FIREBASE-PROJ-SERVICE-ACCOUNT-JSON-CREDENTIALS-ONE-LINER-NO-SPACES
       FIREBASE_PRIVATE_KEY=PRIVATE-KEY-FROM-FIREBASE-SERVICE-ACCOUNT-JSON-WITH-DOUBLE-QUOTES
       EMAIL_WHITELIST=superadmin@gmail.com
+	  ALLOW_CORS=1
       ```
 3. Run the image.
    ```
