@@ -17,7 +17,7 @@ password: 123456789
 
 ### Docker
 
-firebase-users-admin's server component, hosting all the listed endpoints below is available as a stand-alone docker image on Docker Hub with customizable environment variables (.env file).
+firebase-users-admin's server component, hosting all the listed endpoints below is available as a stand-alone [docker image](https://hub.docker.com/r/ciatphdev/firebase-users-admin-server) on Docker Hub with customizable environment variables (.env file).
 
 1. Pull the (production) **/server** docker image from Docker Hub.  
    `docker pull ciatphdev/firebase-users-admin-server:v1.1.1`

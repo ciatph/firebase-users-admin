@@ -3,7 +3,7 @@ import { createUser } from '../../utils/service'
 import UserForm from '../../components/common/userform'
 
 const defaultState = {
-  email: '', displayname: '', account_level: '1', disabled: false, emailverified: false
+  email: '', displayname: '', password: '', account_level: '1', disabled: false, emailverified: false
 }
 
 const defaultLoadingState = {
