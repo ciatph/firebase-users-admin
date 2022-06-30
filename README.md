@@ -140,6 +140,14 @@ Copies the built `/client` website from `/client/build` to the server's root dir
 
 We can use Docker to run dockerized **client** and **server** apps for local development. The following methods require Docker and Docker compose correctly installed and set up on your development machine.
 
+### Docker Dependencies
+
+The following dependencies are used to build and run the image. Please feel feel free to use other versions as needed.
+
+1. Ubuntu 20.04 (Host)
+2. Docker version 20.10.17, build 100c701
+3. Docker Compose version v2.6.0
+
 ### Docker for Localhost Development
 
 1. Set-up the environment variables and firebase configuration file for the **/client** app.
@@ -168,26 +176,40 @@ The following docker-compose commands build small client and server images targe
 
 1. Install and set up the required **client** and **server** environment variables as with the required variables on [**Docker for Localhost Development**](#docker-for-localhost-development).
 2. Build the client and server docker services for production deployment.  
-   - `docker-compose -f docker-compose-prod.yml build`
-3. At this point, we can opt to push the docker images to a docker registry of your choice. (Requires sign-in to the selected docker registry).
-   - `docker-compose -f docker-compose-prod.yml push`
-4. Create and start the client and server containers.  
-`docker-compose -f docker-compose-prod.yml up`
-5. Run a script in the container to create the default `superadmin@gmail.com` account, if it does not yet exist in the Firestore database.  
-   `docker exec -it server-prod npm run seed`
-6. Launch the dockerized (prod) client app on  
+   - **OPTION #1 - Client and Server as (2) Separate Images**  
+      - `docker-compose -f docker-compose-prod.yml build`
+	  - > **INFO:** client is served in an nginx container and backend runs from pm2
+   - **OPTION #2 - Client and Server as Bundled in (1) Image**  
+      - `docker-compose -f docker-compose-app.yml build`
+	  - > **INFO:** client is served in an a static directory served in the backend's via express static middleware. Backend runs from pm2.
+3. Create and start the containers.  
+   ```
+   docker-compose -f docker-compose-prod.yml up (OPTION #1)
+   docker-compose -f docker-compose-app.yml up (OPTION #2)
+   ```
+4. Run a script in the container to create the default `superadmin@gmail.com` account, if it does not yet exist in the Firestore database.  
+   ```
+   docker exec -it server-prod npm run seed (OPTION #1)
+   docker exec -it firebase-users-admin-app npm run seed (OPTION #2)
+   ```
+5. Launch the dockerized (prod) client app on  
 `http://localhost:3000`
-7. Launch the dockerized (prod) server app's API documentation on  
+6. Launch the dockerized (prod) server app's API documentation on  
 `http://localhost:3001/docs`
-8. Stop and remove containers, networks, images and volumes:  
-`docker-compose -f docker-compose-prod.yml down`
+7. Stop and remove containers, networks, images and volumes:  
+   ```
+   docker-compose -f docker-compose-prod.yml down (OPTION #1)
+   docker-compose -f docker-compose-app.yml down (OPTION #2)
+   ```
 
 ## Pre-built Server Docker Image
 
-**firebase-users-admin**'s `server` component is available as a stand-alone docker image on Docker Hub with customizable environment variables (.env file).
+The `server` component of **firebase-users-admin** is available as a stand-alone docker image on Docker Hub with customizable environment variables (.env file). The server also serves the pre-built `client` website from a static directory using the `express.static()` middleware.
 
-1. Pull the (production) **/server** docker image from Docker Hub.  
-   `docker pull ciatphdev/firebase-users-admin-server:v1.1.1`
+### Steps
+
+1. Pull the (production) **/server** [docker image](https://hub.docker.com/repository/docker/ciatphdev/firebase-users-admin-server) from Docker Hub.  
+   `docker pull ciatphdev/firebase-users-admin-server-app:v1.1.2`
 2. Create a `.env` file.  
    - Read [**Installation - server #3**](#server) for more information.
    - Replace the variables accordingly in the `.env` file.
@@ -203,11 +225,13 @@ The following docker-compose commands build small client and server images targe
    docker run -it --rm \
       --env-file .env \
       -p 3001:3001 \
-      ciatphdev/firebase-users-admin-server:v1.1.1
+      ciatphdev/firebase-users-admin-server:v1.1.2
    ```
 4. Run a script in the container to create the default `superadmin@gmail.com` account, if it does not yet exist in the Firestore database.  
    `docker exec -it server-prod npm run seed`
-5. Launch the server API documentation on  
+5. Launch the dockerized client + server's frontend on  
+`http://localhost:3001`
+6. Launch the server API documentation on  
 `http://localhost:3001/docs`
 
 
