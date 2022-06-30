@@ -1,4 +1,5 @@
 const { Router } = require('express')
+const cors = require('cors')
 const router = new Router()
 
 const {
@@ -14,6 +15,8 @@ const {
   isSuperAdmin,
   isProtected
 } = require('../middleware')
+
+const { corsOptionsDelegate } = require('../utils/whitelist-cors')
 
 // ----------------------------------------
 // USERS
@@ -159,6 +162,7 @@ router.get('/user', getUser)
  * @apiExample {js} Example usage:
  * await axios.get('http://localhost:3001/api/users')
  */
+// router.get('/users', cors(corsOptionsDelegate), listUsers)
 router.get('/users', listUsers)
 
 module.exports = router
