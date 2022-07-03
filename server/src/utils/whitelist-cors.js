@@ -14,7 +14,30 @@ const corsOptions = {
   optionsSuccessStatus: 200
 }
 
+const corsOptionsDelegate = (req, callback) => {
+  const corsoptions = {}
+  let allowed = false
+
+  const hOrigin = req.header('Origin')
+  const origin = req.headers.origin
+  const host = req.headers.host
+  const fetchsite = req.headers['sec-fetch-site']
+  console.log(`--header: "${hOrigin}"\n -req.origin: ${origin}\n -host: ${host}\n -fetchsite: ${fetchsite}\n`)
+
+  if (fetchsite === 'same-origin') {
+    allowed = true
+  } else if (fetchsite === 'same-site') {
+    allowed = whitelist.includes(hOrigin) && whitelist.includes(origin)
+  } else if (fetchsite === undefined) {
+    allowed = false
+  }
+
+  corsoptions.origin = allowed
+  callback(null, corsoptions)
+}
+
 module.exports = {
   corsOptions,
-  whitelist
+  whitelist,
+  corsOptionsDelegate
 }

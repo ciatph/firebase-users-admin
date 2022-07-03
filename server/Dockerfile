@@ -16,12 +16,12 @@ RUN npm run build
 FROM base as production
 ENV NODE_ENV production
 RUN npm ci --only=production && npm cache clean --force
-RUN npm install --save pm2
+RUN npm install pm2@5.2.0 -g
 COPY . .
 COPY --from=build /opt/server/public/docs ./public/docs
 USER server
 EXPOSE 3001
-CMD ["npm", "run", "pm2"]
+CMD ["pm2-runtime", "process.json"]
 
 # DEVELOPMENT PROFILE TARGET
 FROM base as development

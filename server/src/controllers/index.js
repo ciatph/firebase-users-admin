@@ -1,4 +1,5 @@
 const { Router } = require('express')
+const cors = require('cors')
 const router = new Router()
 
 const {
@@ -15,6 +16,8 @@ const {
   isProtected
 } = require('../middleware')
 
+const { corsOptionsDelegate } = require('../utils/whitelist-cors')
+
 // ----------------------------------------
 // USERS
 // ----------------------------------------
@@ -30,12 +33,14 @@ const {
  * @apiSampleRequest off
  * @apiParam (Request Body) {String} email User email
  * @apiParam (Request Body) {String} displayname Display name/username
+ * @apiParam (Request Body) {String} password User's password
  * @apiParam (Request Body) {Number} account_level account level for custom claims: 1=superadmin, 2=admin
  *
  * @apiSuccess {String} uid Unique Firebase user id
  * @apiSuccess {String} email User email
  * @apiSuccess {String} emailVerified true|false account's email verification status
  * @apiSuccess {String} displayName user's display name/username
+ * @apiSuccess {String} password User's password
  * @apiSuccess {String} disabled true|false account is enabled or disabled
  * @apiSuccess {Object} metadata
  * @apiSuccess {String} metadata.lastSignInTime Date/time the user has last signed-in
@@ -54,6 +59,7 @@ const {
  *   data: {
  *     email: 'someonesemail@gmail.com',
  *     displayname: 'Some User',
+ *     password: '123456789'
  *     account_level: 1
  *   },
  *   headers: {
@@ -63,7 +69,11 @@ const {
  *
  * const result = await axios({ ...obj, url: 'http://localhost:3001/api/user', method: 'POST' })
  */
-router.post('/user', validFirebaseToken, isSuperAdmin, createUser)
+if (process.env.ALLOW_AUTH === '0') {
+  router.post('/user', createUser)
+} else {
+  router.post('/user', validFirebaseToken, isSuperAdmin, createUser)
+}
 
 /**
  * @api {patch} /user Update UserRecord
@@ -77,6 +87,7 @@ router.post('/user', validFirebaseToken, isSuperAdmin, createUser)
  * @apiParam (Request Body) {String} uid Unique Firebase user id
  * @apiParam (Request Body) {String} [email] User email
  * @apiParam (Request Body) {String} [displayname] Display name/username
+ * @apiParam (Request Body) {String} [password] User's password
  * @apiParam (Request Body) {Bool} [disabled] true|false account is enabled or disabled
  * @apiParam (Request Body) {Bool} [emailverified] true|false account's email verification status
  * @apiParam (Request Body) {Number} [account_level] account level for custom claims: 1=superadmin, 2=admin
@@ -88,6 +99,7 @@ router.post('/user', validFirebaseToken, isSuperAdmin, createUser)
  *   data: {
  *     uid: '85EmjTGiT1cYakDC6VGZ8uaGgZN2',
  *     displayname: 'Juan de la Cruz',
+ *     password: '123456789',
  *     account_level: 2
  *   },
  *   headers: {
@@ -97,7 +109,11 @@ router.post('/user', validFirebaseToken, isSuperAdmin, createUser)
  *
  * const res = await axios({ ...obj, url: 'http://localhost:3001/api/user', method: 'PATCH' })
  */
-router.patch('/user', validFirebaseToken, isSuperAdmin, isProtected, updateUser)
+if (process.env.ALLOW_AUTH === '0') {
+  router.patch('/user', updateUser)
+} else {
+  router.patch('/user', validFirebaseToken, isSuperAdmin, isProtected, updateUser)
+}
 
 /**
  * @api {delete} /user/:uid Delete UserRecord
@@ -121,7 +137,11 @@ router.patch('/user', validFirebaseToken, isSuperAdmin, isProtected, updateUser)
  *
  * await axios.delete('http://localhost:3001/api/user/6uHhmVfPdjb6MR4ad5v9Np38z733', obj)
  */
-router.delete('/user/:uid', validFirebaseToken, isSuperAdmin, isProtected, deleteUser)
+if (process.env.ALLOW_AUTH === '0') {
+  router.delete('/user/:uid', deleteUser)
+} else {
+  router.delete('/user/:uid', validFirebaseToken, isSuperAdmin, isProtected, deleteUser)
+}
 
 /**
  * @api {get} /user Get UserRecord
@@ -154,6 +174,7 @@ router.get('/user', getUser)
  * @apiExample {js} Example usage:
  * await axios.get('http://localhost:3001/api/users')
  */
+// router.get('/users', cors(corsOptionsDelegate), listUsers)
 router.get('/users', listUsers)
 
 module.exports = router
