@@ -24,7 +24,7 @@ app.get('*', (req, res) => {
 })
 
 app.use((err, req, res, next) => {
-  res.status(500).send(err.message)
+  return res.status(500).send(err.message)
 })
 
 app.listen(PORT, () => {

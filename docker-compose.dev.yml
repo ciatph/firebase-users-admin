@@ -10,6 +10,8 @@ services:
       context: ./client
       dockerfile: Dockerfile
       target: development
+    networks:
+      - firebase-users-admin-dev
     volumes:
       - ./client/public:/opt/client/public
       - ./client/src:/opt/client/src
@@ -26,7 +28,14 @@ services:
       context: ./server
       dockerfile: Dockerfile
       target: development
+    networks:
+      - firebase-users-admin-dev
     volumes:
       - ./server/src:/opt/server/src
     ports:
       - "3001:3001"
+
+networks:
+  firebase-users-admin-dev:
+    name: firebase-users-admin-dev
+    external: false

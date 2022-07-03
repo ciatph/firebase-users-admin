@@ -1,6 +1,8 @@
+# Builds (2) separate images for the client and server
+
 version: "3"
 services:
-  # Built Create React App (CRA) website running on nginx
+  # Build Create React App (CRA) website running on nginx container
   client-prod:
     container_name: client-prod
     image: ciatphdev/firebase-users-admin-client:latest
@@ -11,10 +13,12 @@ services:
       context: ./client
       dockerfile: Dockerfile
       target: production
+    networks:
+      - firebase-users-admin
     ports:
       - "3000:3000"
 
-  # Express app that restarts itself on errors using pm2
+  # Express app (backend only) that restarts itself on errors using pm2
   server-prod:
     container_name: server-prod
     image: ciatphdev/firebase-users-admin-server:latest
@@ -25,5 +29,12 @@ services:
       context: ./server
       dockerfile: Dockerfile
       target: production
+    networks:
+      - firebase-users-admin
     ports:
       - "3001:3001"
+
+networks:
+  firebase-users-admin:
+    name: firebase-users-admin
+    external: false

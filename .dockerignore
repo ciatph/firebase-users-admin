@@ -4,3 +4,5 @@ node_modules
 npm-debug.log
 Dockerfile
 .dockerignore
+.env
+/server/.env

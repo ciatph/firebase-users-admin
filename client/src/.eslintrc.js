@@ -29,7 +29,7 @@ module.exports = {
     quotes: ['error', 'single'],
     semi: ['error', 'never'],
     'no-unused-vars': 'off',
-    'no-undef': 'off',
-    'no-console': 2
+    'no-undef': 'off'
+    // 'no-console': 2
   }
 }

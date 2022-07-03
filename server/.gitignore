@@ -1,5 +1,6 @@
 node_modules/
-public/docs/
+public/
+public/index.html
 .env
 .env.dev
 .env.prod

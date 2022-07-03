@@ -118,8 +118,8 @@ jobs:
           cp client/.env.example client/.env
           cp server/.env.example server/.env
       - name: Set release version number
-        run: sed -i -e "s/latest/${{ github.event.release.tag_name }}/g" docker-compose.prod.yml
+        run: sed -i -e "s/latest/${{ github.event.release.tag_name }}/g" docker-compose.app.yml
       - name: Build Images
-        run: docker-compose -f docker-compose.prod.yml build
+        run: docker-compose -f docker-compose.app.yml build
       - name: Push Images to Docker Hub
-        run: docker-compose -f docker-compose.prod.yml push
+        run: docker-compose -f docker-compose.app.yml push
