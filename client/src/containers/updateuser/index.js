@@ -13,7 +13,7 @@ const defaultLoadingState = {
 
 function UpdateUserContainer () {
   const location = useLocation()
-  const [state, setState] = useState(location?.state || defaultState)
+  const [state, setState] = useState(location.state ? { ...location.state, password: '' } : defaultState)
   const [loading, setLoading] = useState(defaultLoadingState)
 
   const onInputChange = (e) => {
