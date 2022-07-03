@@ -176,7 +176,7 @@ The following dependencies are used to build and run the image. Please feel feel
 
 #### Option #1 - Client and Server as (2) Separate Images and Services
 
-The following docker-compose commands build small `client` and `server` images targeted for creating optimized dockerized apps running on self-managed production servers. The frontend `client` is served by an Nginx service. Hot reload is not available when editing source codes from `/client/src` or `/server/src`.
+The following docker-compose commands build small `client` and `server` images targeted for creating optimized dockerized apps running on self-managed production servers. An **Nginx** service serves the frontend `client` on port `3000`. The `server`, running on a separate **Nodejs (pm2)** service, is also served by the client's Nginx service in a reverse proxy on port `3001`.  Hot reload is not available when editing source codes from `/client/src` or `/server/src`.
 
 1. Install and set up the required **client** and **server** environment variables as with the required variables on [**Docker for Localhost Development**](#docker-for-localhost-development).
 2. Build the client and server docker services for production deployment.  
