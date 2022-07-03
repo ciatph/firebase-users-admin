@@ -13,7 +13,7 @@ app.use(express.urlencoded({ extended: false }))
 app.use(cookieParser())
 app.use(express.static(path.resolve(__dirname, '..', 'public')))
 
-if (process.env.ENABLE_CORS === '1') {
+if (process.env.ALLOW_CORS === '1') {
   app.use(cors(corsOptions))
 }
 

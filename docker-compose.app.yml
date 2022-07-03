@@ -23,5 +23,5 @@ services:
 
 networks:
   firebase-users-admin-app:
-    name: firebase-users-admin-app-network
+    name: firebase-users-admin-app
     external: false

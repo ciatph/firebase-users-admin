@@ -29,7 +29,7 @@ firebase-users-admin's server component, hosting all the listed endpoints below 
       FIREBASE_SERVICE_ACC=YOUR-FIREBASE-PROJ-SERVICE-ACCOUNT-JSON-CREDENTIALS-ONE-LINER-NO-SPACES
       FIREBASE_PRIVATE_KEY=PRIVATE-KEY-FROM-FIREBASE-SERVICE-ACCOUNT-JSON-WITH-DOUBLE-QUOTES
       EMAIL_WHITELIST=superadmin@gmail.com
-      ENABLE_CORS=1
+      ALLOW_CORS=1
       ALLOW_AUTH=1
       ```
 3. Run the image.

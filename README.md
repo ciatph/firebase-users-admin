@@ -6,14 +6,28 @@ A basic web app client in the **/client** directory will show basic API usage an
 
 ## Content
 
+- [firebase-users-admin](#firebase-users-admin)
+- [Content](#content)
 - [Requirements](#requirements)
+  - [Core Libraries and Frameworks](#core-libraries-and-frameworks)
 - [Installation](#installation)
+  - [server](#server)
+  - [client](#client)
 - [Usage](#usage)
 - [Available Scripts - server](#available-scripts---server)
+  - [`npm start`](#npm-start)
+  - [`npm run dev`](#npm-run-dev)
+  - [`npm run gen:docs`](#npm-run-gendocs)
+  - [`npm run seed`](#npm-run-seed)
+  - [`npm run copyclient`](#npm-run-copyclient)
 - [Installation and Usage Using Docker](#installation-and-usage-using-docker)
+  - [Docker Dependencies](#docker-dependencies)
   - [Docker for Localhost Development](#docker-for-localhost-development)
   - [Docker for Production Deployment](#docker-for-production-deployment)
-   - [Pre-built Server Docker Image](#pre-built-server-docker-image)
+    - [Option #1 - Client and Server as (2) Separate Images and Services](#option-1---client-and-server-as-2-separate-images-and-services)
+    - [Option #2 - Client and Server Bundled in (1) Image and Service](#option-2---client-and-server-bundled-in-1-image-and-service)
+- [Pre-built Server Docker Image](#pre-built-server-docker-image)
+  - [Steps](#steps)
 - [References](#references)
 
 ## Requirements
@@ -50,9 +64,9 @@ A basic web app client in the **/client** directory will show basic API usage an
    | --- | --- |
    |FIREBASE_SERVICE_ACC| The project's private key file contents, condensed into one line and minus all whitespace characters.<br><br>The service account JSON file is generated from the Firebase project's **Project Settings** page, on **Project Settings** -> **Service accounts** -> **Generate new private key**|
    |FIREBASE_PRIVATE_KEY| The `private_key` entry from the service account JSON file.<br> <blockquote> **NOTE:** Take note to make sure that the value starts and ends with a double-quote on WINDOWS OS localhost. Some systems may or may not require the double-quotes (i.e., Ubuntu running on heroku).</blockquote> |
-   |ALLOWED_ORIGINS|IP/domain origins in comma-separated values that are allowed to access the API if `ENABLE_CORS=1`. Include `http://localhost:3000` by default to allow CORS access to the `/client` app.|
+   |ALLOWED_ORIGINS|IP/domain origins in comma-separated values that are allowed to access the API if `ALLOW_CORS=1`. Include `http://localhost:3000` by default to allow CORS access to the `/client` app.|
    |EMAIL_WHITELIST| Comma-separated email addresses linked to Firebase Auth UserRecords that are not allowed to be deleted or updated (write-protected)<br><br>Default value is `superadmin@gmail.com`|
-   |ENABLE_CORS|Allow Cross-Origin Resource Sharing (CORS) on the API endpoints.<br><br>Default value is `1`, allowing access to domains listed in `ALLOWED_ORIGINS`. Setting to `0` will make all endpoints accept requests from all domains, including Postman.|
+   |ALLOW_CORS|Allow Cross-Origin Resource Sharing (CORS) on the API endpoints.<br><br>Default value is `1`, allowing access to domains listed in `ALLOWED_ORIGINS`. Setting to `0` will make all endpoints accept requests from all domains, including Postman.|
    |ALLOW_AUTH|Restrict access to the `POST`, `PATCH` and `DELETE` API endpoints by allowing signed-in Firebase user Bearer Authorization (Firebase token) checking.<br><br>Retrieve the signed-in Firebase token by signing in a user using the Firebase Web JS SDK `signInWithEmailAndPassword()` method, then retrieve the latest token value using `getIdTokenResult()`.<br><br>Default value is `1`. Setting to `0` will disable Bearer Authorization checking on the listed API endpoints.|
 
 ### client
@@ -197,7 +211,7 @@ The following docker-compose commands build a small `server` image targeted for 
 
 1. Install and set up the required **client** and **server** environment variables as with the required variables on [**Docker for Localhost Development**](#docker-for-localhost-development).
    - > **INFO:** This method requires CORS checking dissabled, since the client and server will run on the same port (3001).   
-     > - Disable CORS by setting `ENABLE_CORS=0` in the **.env** file to avoid `Same Origin` errors.  
+     > - Disable CORS by setting `ALLOW_CORS=0` in the **.env** file to avoid `Same Origin` errors.  
 2. Build the client and server docker services for production deployment.  
    - `docker-compose -f docker-compose-app.yml build`
 3. Create and start the containers.  
@@ -218,7 +232,7 @@ The `server` component of **firebase-users-admin** is available as a stand-alone
 ### Steps
 
 1. Pull the (production) **/server** [docker image](https://hub.docker.com/repository/docker/ciatphdev/firebase-users-admin-server) from Docker Hub.  
-   `docker pull ciatphdev/firebase-users-admin-server-app:v1.1.2`
+   `docker pull ciatphdev/firebase-users-admin-server:v1.1.2`
 2. Create a `.env` file.  
    - Read [**Installation - server #3**](#server) for more information.
    - Replace the variables accordingly in the `.env` file.
@@ -227,7 +241,7 @@ The `server` component of **firebase-users-admin** is available as a stand-alone
       FIREBASE_SERVICE_ACC=YOUR-FIREBASE-PROJ-SERVICE-ACCOUNT-JSON-CREDENTIALS-ONE-LINER-NO-SPACES
       FIREBASE_PRIVATE_KEY=PRIVATE-KEY-FROM-FIREBASE-SERVICE-ACCOUNT-JSON-WITH-DOUBLE-QUOTES
       EMAIL_WHITELIST=superadmin@gmail.com
-	  ENABLE_CORS=1
+	  ALLOW_CORS=1
 	  ALLOW_AUTH=1
       ```
 3. Run the image.
