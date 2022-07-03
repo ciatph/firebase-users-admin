@@ -69,7 +69,11 @@ const { corsOptionsDelegate } = require('../utils/whitelist-cors')
  *
  * const result = await axios({ ...obj, url: 'http://localhost:3001/api/user', method: 'POST' })
  */
-router.post('/user', validFirebaseToken, isSuperAdmin, createUser)
+if (process.env.ALLOW_AUTH === '0') {
+  router.post('/user', createUser)
+} else {
+  router.post('/user', validFirebaseToken, isSuperAdmin, createUser)
+}
 
 /**
  * @api {patch} /user Update UserRecord
@@ -105,7 +109,11 @@ router.post('/user', validFirebaseToken, isSuperAdmin, createUser)
  *
  * const res = await axios({ ...obj, url: 'http://localhost:3001/api/user', method: 'PATCH' })
  */
-router.patch('/user', validFirebaseToken, isSuperAdmin, isProtected, updateUser)
+if (process.env.ALLOW_AUTH === '0') {
+  router.patch('/user', updateUser)
+} else {
+  router.patch('/user', validFirebaseToken, isSuperAdmin, isProtected, updateUser)
+}
 
 /**
  * @api {delete} /user/:uid Delete UserRecord
@@ -129,7 +137,11 @@ router.patch('/user', validFirebaseToken, isSuperAdmin, isProtected, updateUser)
  *
  * await axios.delete('http://localhost:3001/api/user/6uHhmVfPdjb6MR4ad5v9Np38z733', obj)
  */
-router.delete('/user/:uid', validFirebaseToken, isSuperAdmin, isProtected, deleteUser)
+if (process.env.ALLOW_AUTH === '0') {
+  router.delete('/user/:uid', deleteUser)
+} else {
+  router.delete('/user/:uid', validFirebaseToken, isSuperAdmin, isProtected, deleteUser)
+}
 
 /**
  * @api {get} /user Get UserRecord

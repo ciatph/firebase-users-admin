@@ -50,9 +50,10 @@ A basic web app client in the **/client** directory will show basic API usage an
    | --- | --- |
    |FIREBASE_SERVICE_ACC| The project's private key file contents, condensed into one line and minus all whitespace characters.<br><br>The service account JSON file is generated from the Firebase project's **Project Settings** page, on **Project Settings** -> **Service accounts** -> **Generate new private key**|
    |FIREBASE_PRIVATE_KEY| The `private_key` entry from the service account JSON file.<br> <blockquote> **NOTE:** Take note to make sure that the value starts and ends with a double-quote on WINDOWS OS localhost. Some systems may or may not require the double-quotes (i.e., Ubuntu running on heroku).</blockquote> |
-   |ALLOWED_ORIGINS|IP/domain origins in comma-separated values that are allowed to access the API. Include `http://localhost:3000` by default to allow CORS access to the `/client` app.|
+   |ALLOWED_ORIGINS|IP/domain origins in comma-separated values that are allowed to access the API if `ENABLE_CORS=1`. Include `http://localhost:3000` by default to allow CORS access to the `/client` app.|
    |EMAIL_WHITELIST| Comma-separated email addresses linked to Firebase Auth UserRecords that are not allowed to be deleted or updated (write-protected)<br><br>Default value is `superadmin@gmail.com`|
-   |ALLOW_CORS|Allow Cross-Origin Resource Sharing (CORS) on the API endpoints.<br><br>Default value is `1`. Setting to `0` will make all endpoints accept requests from all domains, including Postman.|
+   |ENABLE_CORS|Allow Cross-Origin Resource Sharing (CORS) on the API endpoints.<br><br>Default value is `1`, allowing access to domains listed in `ALLOWED_ORIGINS`. Setting to `0` will make all endpoints accept requests from all domains, including Postman.|
+   |ALLOW_AUTH|Restrict access to the `POST`, `PATCH` and `DELETE` API endpoints by allowing signed-in Firebase user Bearer Authorization (Firebase token) checking.<br><br>Retrieve the signed-in Firebase token by signing in a user using the Firebase Web JS SDK `signInWithEmailAndPassword()` method, then retrieve the latest token value using `getIdTokenResult()`.<br><br>Default value is `1`. Setting to `0` will disable Bearer Authorization checking on the listed API endpoints.|
 
 ### client
 
@@ -172,9 +173,9 @@ The following dependencies are used to build and run the image. Please feel feel
 
 ### Docker for Production Deployment
 
-#### Client and Server as (2) Separate Images and Services
+#### Option #1 - Client and Server as (2) Separate Images and Services
 
-The following docker-compose commands build small `client` and `server` images targeted for creating optimized dockerized apps running on self-managed production servers. The frontend `client` is served by Nginx. Hot reload is not available when editing source codes from `/client/src` or `/server/src`.
+The following docker-compose commands build small `client` and `server` images targeted for creating optimized dockerized apps running on self-managed production servers. The frontend `client` is served by an Nginx service. Hot reload is not available when editing source codes from `/client/src` or `/server/src`.
 
 1. Install and set up the required **client** and **server** environment variables as with the required variables on [**Docker for Localhost Development**](#docker-for-localhost-development).
 2. Build the client and server docker services for production deployment.  
@@ -190,13 +191,13 @@ The following docker-compose commands build small `client` and `server` images t
 7. Stop and remove containers, networks, images and volumes:  
    - `docker-compose -f docker-compose-prod.yml down`
    
-#### Client and Server Bundled in (1) Image and Service
+#### Option #2 - Client and Server Bundled in (1) Image and Service
 
 The following docker-compose commands build a small `server` image targeted for creating an optimized dockerized Express app running on self-managed production servers. The frontend `client` is served in an a static directory using the Express static middleware.  
 
 1. Install and set up the required **client** and **server** environment variables as with the required variables on [**Docker for Localhost Development**](#docker-for-localhost-development).
    - > **INFO:** This method requires CORS checking dissabled, since the client and server will run on the same port (3001).   
-     > - Disable CORS by setting `ALLOW_CORS=0` in the **.env** file to avoid `Same Origin` errors.  
+     > - Disable CORS by setting `ENABLE_CORS=0` in the **.env** file to avoid `Same Origin` errors.  
 2. Build the client and server docker services for production deployment.  
    - `docker-compose -f docker-compose-app.yml build`
 3. Create and start the containers.  
@@ -226,7 +227,8 @@ The `server` component of **firebase-users-admin** is available as a stand-alone
       FIREBASE_SERVICE_ACC=YOUR-FIREBASE-PROJ-SERVICE-ACCOUNT-JSON-CREDENTIALS-ONE-LINER-NO-SPACES
       FIREBASE_PRIVATE_KEY=PRIVATE-KEY-FROM-FIREBASE-SERVICE-ACCOUNT-JSON-WITH-DOUBLE-QUOTES
       EMAIL_WHITELIST=superadmin@gmail.com
-	  ALLOW_CORS=1
+	  ENABLE_CORS=1
+	  ALLOW_AUTH=1
       ```
 3. Run the image.
    ```
@@ -237,9 +239,7 @@ The `server` component of **firebase-users-admin** is available as a stand-alone
    ```
 4. Run a script in the container to create the default `superadmin@gmail.com` account, if it does not yet exist in the Firestore database.  
    `docker exec -it server-prod npm run seed`
-5. Launch the dockerized client + server's frontend on  
-`http://localhost:3001`
-6. Launch the server API documentation on  
+5. Launch the server API documentation on  
 `http://localhost:3001/docs`
 
 

@@ -18,7 +18,7 @@ COPY ./client/package*.json ./
 
 # BUILD CLIENT WEBSITE TARGET
 FROM base-client as builder-client
-RUN npm install && npm cache-clean --force
+RUN npm install
 COPY ./client ./
 RUN npm run build
 
@@ -39,6 +39,6 @@ RUN npm install --save pm2
 COPY ./server .
 COPY --from=builder-server /opt/server/public/docs ./public/docs
 COPY --from=builder-client /opt/client/build ./public
-USER server
+USER appuser
 EXPOSE 3001
 CMD ["npm", "run", "pm2"]

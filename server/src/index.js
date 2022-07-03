@@ -6,17 +6,15 @@ const app = express()
 const PORT = process.env.PORT || 3001
 
 const controllers = require('./controllers')
-const { corsOptions, corsOptionsDelegate } = require('./utils/whitelist-cors')
+const { corsOptions } = require('./utils/whitelist-cors')
 
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 app.use(cookieParser())
 app.use(express.static(path.resolve(__dirname, '..', 'public')))
 
-if (process.env.ALLOW_CORS === '1') {
-  // app.use(cors(corsOptions))
-  // app.use('*', cors(corsOptionsDelegate))
-  app.use(cors(corsOptionsDelegate))
+if (process.env.ENABLE_CORS === '1') {
+  app.use(cors(corsOptions))
 }
 
 app.use('/api', controllers)

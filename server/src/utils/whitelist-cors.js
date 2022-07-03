@@ -15,14 +15,13 @@ const corsOptions = {
 }
 
 const corsOptionsDelegate = (req, callback) => {
-  let corsoptions = {}
+  const corsoptions = {}
   let allowed = false
 
   const hOrigin = req.header('Origin')
   const origin = req.headers.origin
   const host = req.headers.host
-  const w = req.headers['sec-fetch-site']
-
+  const fetchsite = req.headers['sec-fetch-site']
   console.log(`--header: "${hOrigin}"\n -req.origin: ${origin}\n -host: ${host}\n -fetchsite: ${fetchsite}\n`)
 
   if (fetchsite === 'same-origin') {
