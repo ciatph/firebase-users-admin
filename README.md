@@ -6,28 +6,15 @@ A basic web app client in the **/client** directory will show basic API usage an
 
 ## Content
 
-- [firebase-users-admin](#firebase-users-admin)
-- [Content](#content)
 - [Requirements](#requirements)
-  - [Core Libraries and Frameworks](#core-libraries-and-frameworks)
 - [Installation](#installation)
-  - [server](#server)
-  - [client](#client)
 - [Usage](#usage)
 - [Available Scripts - server](#available-scripts---server)
-  - [`npm start`](#npm-start)
-  - [`npm run dev`](#npm-run-dev)
-  - [`npm run gen:docs`](#npm-run-gendocs)
-  - [`npm run seed`](#npm-run-seed)
-  - [`npm run copyclient`](#npm-run-copyclient)
 - [Installation and Usage Using Docker](#installation-and-usage-using-docker)
   - [Docker Dependencies](#docker-dependencies)
   - [Docker for Localhost Development](#docker-for-localhost-development)
   - [Docker for Production Deployment](#docker-for-production-deployment)
-    - [Option #1 - Client and Server as (2) Separate Images and Services](#option-1---client-and-server-as-2-separate-images-and-services)
-    - [Option #2 - Client and Server Bundled in (1) Image and Service](#option-2---client-and-server-bundled-in-1-image-and-service)
 - [Pre-built Server Docker Image](#pre-built-server-docker-image)
-  - [Steps](#steps)
 - [References](#references)
 
 ## Requirements
@@ -210,7 +197,7 @@ The following docker-compose commands build small `client` and `server` images t
 The following docker-compose commands build a small `server` image targeted for creating an optimized dockerized Express app running on self-managed production servers. The frontend `client` is served in an a static directory using the Express static middleware.  
 
 1. Install and set up the required **client** and **server** environment variables as with the required variables on [**Docker for Localhost Development**](#docker-for-localhost-development).
-   - > **INFO:** This method requires CORS checking dissabled, since the client and server will run on the same port (3001).   
+   - > **INFO:** This build method requires CORS checking dissabled, since the client and server will run on the same port (3001).   
      > - Disable CORS by setting `ALLOW_CORS=0` in the **.env** file to avoid `Same Origin` errors.  
 2. Build the client and server docker services for production deployment.  
    - `docker-compose -f docker-compose-app.yml build`
@@ -227,21 +214,23 @@ The following docker-compose commands build a small `server` image targeted for 
 
 ## Pre-built Server Docker Image
 
-The `server` component of **firebase-users-admin** is available as a stand-alone docker image on Docker Hub with customizable environment variables (.env file). The server also serves the pre-built `client` website from a static directory using the `express.static()` middleware.
+The `server` component of **firebase-users-admin** is available as a stand-alone docker image on Docker Hub with customizable environment variables (.env file).
+
+The server also serves the pre-built `client` website from a static directory using the `express.static()` middleware, following the build instructions from [**Option #2 - Client and Server Bundled in (1) Image and Service**](#option-2---client-and-server-bundled-in-1-image-and-service).
 
 ### Steps
 
-1. Pull the (production) **/server** [docker image](https://hub.docker.com/repository/docker/ciatphdev/firebase-users-admin-server) from Docker Hub.  
-   `docker pull ciatphdev/firebase-users-admin-server:v1.1.2`
+1. Pull the (production) **/server** [docker image](https://hub.docker.com/repository/docker/ciatphdev/firebase-users-admin-app) from Docker Hub.  
+   `docker pull ciatphdev/firebase-users-admin-app:v1.1.2`
 2. Create a `.env` file.  
    - Read [**Installation - server #3**](#server) for more information.
-   - Replace the variables accordingly in the `.env` file.
+   - Replace the variables accordingly in the `.env` file. Set `ALLOW_CORS=0` to allow `Same Origin` requests. Read [**Option #2 - Client and Server Bundled in (1) Image and Service**](#option-2---client-and-server-bundled-in-1-image-and-service) for more information.
       ```
       ALLOWED_ORIGINS=http://localhost,http://localhost:3000,http://mywebsite.com,http://yourwebsite.com
       FIREBASE_SERVICE_ACC=YOUR-FIREBASE-PROJ-SERVICE-ACCOUNT-JSON-CREDENTIALS-ONE-LINER-NO-SPACES
       FIREBASE_PRIVATE_KEY=PRIVATE-KEY-FROM-FIREBASE-SERVICE-ACCOUNT-JSON-WITH-DOUBLE-QUOTES
       EMAIL_WHITELIST=superadmin@gmail.com
-	  ALLOW_CORS=1
+	  ALLOW_CORS=0
 	  ALLOW_AUTH=1
       ```
 3. Run the image.
@@ -249,12 +238,21 @@ The `server` component of **firebase-users-admin** is available as a stand-alone
    docker run -it --rm \
       --env-file .env \
       -p 3001:3001 \
-      ciatphdev/firebase-users-admin-server:v1.1.2
+      ciatphdev/firebase-users-admin-app:v1.1.2
    ```
 4. Run a script in the container to create the default `superadmin@gmail.com` account, if it does not yet exist in the Firestore database.  
-   `docker exec -it server-prod npm run seed`
+   `docker exec -it firebase-users-admin-app npm run seed`
 5. Launch the server API documentation on  
 `http://localhost:3001/docs`
+6. Launch the client website on `http://localhost:3001`.
+   - Login using the superadmin account create on step # 4.  
+      ```
+	  username: superadmin@gmail.com
+	  password: 123456789
+	  ```
+   - Test the API routes by creating new accounts, editing or deleting existing accounts.
+   - The signed-in user's Firebase Auth token is available on the **Home** page (http://localhost:3001/)
+
 
 
 ## References
