@@ -35,10 +35,10 @@ RUN npm run build
 FROM base-server as production
 ENV NODE_ENV production
 RUN npm ci --only=production && npm cache clean --force
-RUN npm install --save pm2
+RUN npm install pm2@5.2.0 -g
 COPY ./server .
 COPY --from=builder-server /opt/server/public/docs ./public/docs
 COPY --from=builder-client /opt/client/build ./public
 USER appuser
 EXPOSE 3001
-CMD ["npm", "run", "pm2"]
+CMD ["pm2-runtime", "process.json"]
