@@ -31,6 +31,7 @@ RUN npm run build
 # PRODUCTION CLIENT+SERVER PROFILE TARGET
 # Express backend running on pm2
 # Create React App (CRA) served from backend's static directory (using express.static() middleware)
+# Requirements: Disable CORS to allow Same Origin headers on client and server APIs
 FROM base-server as production
 ENV NODE_ENV production
 RUN npm ci --only=production && npm cache clean --force

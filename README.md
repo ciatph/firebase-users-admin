@@ -172,35 +172,43 @@ The following dependencies are used to build and run the image. Please feel feel
 
 ### Docker for Production Deployment
 
-The following docker-compose commands build small client and server images targeted for creating optimized dockerized apps running on self-managed production servers. Hot reload is not available when editing source codes from `/client/src` or `/server/src`.
+#### Client and Server as (2) Separate Images and Services
+
+The following docker-compose commands build small `client` and `server` images targeted for creating optimized dockerized apps running on self-managed production servers. The frontend `client` is served by Nginx. Hot reload is not available when editing source codes from `/client/src` or `/server/src`.
 
 1. Install and set up the required **client** and **server** environment variables as with the required variables on [**Docker for Localhost Development**](#docker-for-localhost-development).
 2. Build the client and server docker services for production deployment.  
-   - **OPTION #1 - Client and Server as (2) Separate Images**  
-      - `docker-compose -f docker-compose-prod.yml build`
-	  - > **INFO:** client is served in an nginx container and backend runs from pm2
-   - **OPTION #2 - Client and Server as Bundled in (1) Image**  
-      - `docker-compose -f docker-compose-app.yml build`
-	  - > **INFO:** client is served in an a static directory served in the backend's via express static middleware. Backend runs from pm2.
+   - `docker-compose -f docker-compose-prod.yml build`
 3. Create and start the containers.  
-   ```
-   docker-compose -f docker-compose-prod.yml up (OPTION #1)
-   docker-compose -f docker-compose-app.yml up (OPTION #2)
-   ```
+   - `docker-compose -f docker-compose-prod.yml up`
 4. Run a script in the container to create the default `superadmin@gmail.com` account, if it does not yet exist in the Firestore database.  
-   ```
-   docker exec -it server-prod npm run seed (OPTION #1)
-   docker exec -it firebase-users-admin-app npm run seed (OPTION #2)
-   ```
+   - `docker exec -it server-prod npm run seed`
 5. Launch the dockerized (prod) client app on  
 `http://localhost:3000`
 6. Launch the dockerized (prod) server app's API documentation on  
 `http://localhost:3001/docs`
 7. Stop and remove containers, networks, images and volumes:  
-   ```
-   docker-compose -f docker-compose-prod.yml down (OPTION #1)
-   docker-compose -f docker-compose-app.yml down (OPTION #2)
-   ```
+   - `docker-compose -f docker-compose-prod.yml down`
+   
+#### Client and Server Bundled in (1) Image and Service
+
+The following docker-compose commands build a small `server` image targeted for creating an optimized dockerized Express app running on self-managed production servers. The frontend `client` is served in an a static directory using the Express static middleware.  
+
+1. Install and set up the required **client** and **server** environment variables as with the required variables on [**Docker for Localhost Development**](#docker-for-localhost-development).
+   - > **INFO:** This method requires CORS checking dissabled, since the client and server will run on the same port (3001).   
+     > - Disable CORS by setting `ALLOW_CORS=0` in the **.env** file to avoid `Same Origin` errors.  
+2. Build the client and server docker services for production deployment.  
+   - `docker-compose -f docker-compose-app.yml build`
+3. Create and start the containers.  
+   - `docker-compose -f docker-compose-app.yml up`
+4. Run a script in the container to create the default `superadmin@gmail.com` account, if it does not yet exist in the Firestore database.  
+   - `docker exec -it firebase-users-admin-app npm run seed`
+5. Launch the dockerized (prod) client + server app on  
+`http://localhost:3000`
+6. Launch the dockerized (prod) client + server app API documentation on  
+`http://localhost:3001/docs`
+7. Stop and remove containers, networks, images and volumes:  
+   - `docker-compose -f docker-compose-app.yml down`
 
 ## Pre-built Server Docker Image
 

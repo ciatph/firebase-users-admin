@@ -1,5 +1,0 @@
-# PRODUCTION CLIENT PROFILE
-FROM nginx:1.22.0-alpine as PRODUCTION
-COPY ./client/nginx/nginx.app.conf /etc/nginx/conf.d/nginx.conf
-EXPOSE 3000
-CMD ["nginx", "-g", "daemon off;"]

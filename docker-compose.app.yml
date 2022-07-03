@@ -1,6 +1,7 @@
 # Builds the server and client in (1) image:
 # - Express backend that restarts itself on errors running on pm2
 # - Create React App (CRA) client served from a static directory (using express.static() middleware)
+# Requirements: Disable CORS to allow Same Origin headers on client and server APIs
 version: "3"
 services:
   # Built Create React App (CRA) website running on nginx
@@ -19,20 +20,6 @@ services:
       - firebase-users-admin-app
     ports:
       - "3001:3001"
-  
-  # Optional include
-  webserver:
-    container_name: firebase-users-admin-webserver
-    image: nginx:1.22.0-alpine
-    restart: always
-    build:
-      content: .
-      dockerfile: Dockerfile.webserver
-      target: production
-    ports:
-      - "3000:3000"
-    networks:
-      - firebase-users-admin-app
 
 networks:
   firebase-users-admin-app:
