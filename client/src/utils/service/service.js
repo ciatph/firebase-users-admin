@@ -71,8 +71,8 @@ export default class Service {
     const body = {}
 
     fields.forEach((item) => {
-      if (info[item.toLowerCase()] !== undefined && info[item.toLowerCase()] !== '') {
-        body[item] = info[item.toLowerCase()]
+      if (info[item.toLowerCase()] !== undefined && (item !== 'password') ? info[item] !== '' : true) {
+        body[item] = info[item]
       } else {
         throw new Error('Please check your input.')
       }

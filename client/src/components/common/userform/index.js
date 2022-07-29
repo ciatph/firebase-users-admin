@@ -54,6 +54,7 @@ function UserForm (props) {
       <TextField
         id='password'
         label='Enter password'
+        placeholder={type === 'create' ? 'Enter password' : 'Password will not be updated if left blank' }
         variant='outlined'
         size='small'
         disabled={loadstatus.isLoading}
