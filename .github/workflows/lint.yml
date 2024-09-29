@@ -2,8 +2,8 @@ name: Lint Files
 
 on:
   push:
-    branches:
-      - '*'
+    branches-ignore:
+      - 'master'
 
 jobs:
   lint-client:
@@ -14,9 +14,9 @@ jobs:
         node-version: [14.x]
     steps:
       - name: Checkout the repository
-        uses: actions/checkout@v1
+        uses: actions/checkout@v3
       - name: Use NodeJS ${{ matrix.node-version }}
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
       - name: Install Dependencies and lint
@@ -33,13 +33,13 @@ jobs:
         node-version: [14.x]
     steps:
       - name: Checkout the repository
-        uses: actions/checkout@v1
+        uses: actions/checkout@v3
       - name: Use NodeJS ${{ matrix.node-version }}
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
       - name: Install Dependencies and lint
         run: |
           cd server
           npm install
-          npm run lint          
+          npm run lint
