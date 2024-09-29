@@ -1,9 +1,8 @@
-version: "3"
 services:
   # Create React App (CRA) running on development mode
   client-dev:
     container_name: client-dev
-    image: ciatphdev/firebase-users-admin-client:dev
+    image: ciatphdev/firebase-users-client:dev
     env_file:
       - ./client/.env
     build:
@@ -11,7 +10,7 @@ services:
       dockerfile: Dockerfile
       target: development
     networks:
-      - firebase-users-admin-dev
+      - firebase-users-dev
     volumes:
       - ./client/public:/opt/client/public
       - ./client/src:/opt/client/src
@@ -21,7 +20,7 @@ services:
   # Express app running in development mode with auto reload using nodemon
   server-dev:
     container_name: server-dev
-    image: ciatphdev/firebase-users-admin-server:dev
+    image: ciatphdev/firebase-users-server:dev
     env_file:
       - ./server/.env
     build:
@@ -29,13 +28,13 @@ services:
       dockerfile: Dockerfile
       target: development
     networks:
-      - firebase-users-admin-dev
+      - firebase-users-dev
     volumes:
       - ./server/src:/opt/server/src
     ports:
       - "3001:3001"
 
 networks:
-  firebase-users-admin-dev:
-    name: firebase-users-admin-dev
+  firebase-users-dev:
+    name: firebase-users-dev
     external: false

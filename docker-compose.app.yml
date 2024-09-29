@@ -2,12 +2,12 @@
 # - Express backend that restarts itself on errors running on pm2
 # - Create React App (CRA) client served from a static directory (using express.static() middleware)
 # Requirements: Disable CORS to allow Same Origin headers on client and server APIs
-version: "3"
+
 services:
   # Built Create React App (CRA) website running on nginx
-  firebase-users-admin-app:
-    container_name: firebase-users-admin-app
-    image: ciatphdev/firebase-users-admin-app:latest
+  firebase-users-app:
+    container_name: firebase-users-app
+    image: ciatphdev/firebase-users-app:latest
     restart: always
     env_file:
       - ./server/.env
@@ -17,11 +17,11 @@ services:
       dockerfile: Dockerfile.app
       target: production
     networks:
-      - firebase-users-admin-app
+      - firebase-users-app
     ports:
       - "3001:3001"
 
 networks:
-  firebase-users-admin-app:
-    name: firebase-users-admin-app
+  firebase-users-app:
+    name: firebase-users-app
     external: false

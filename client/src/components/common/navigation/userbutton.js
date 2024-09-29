@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { auth, signOut } from '../../../utils/firebase/firebase.config'
+import { auth, signOut } from '../../../config/firebase.config'
 
 function UserButton (hasUser) {
   const logout = async () => {
