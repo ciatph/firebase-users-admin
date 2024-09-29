@@ -326,6 +326,12 @@ https://hub.docker.com/r/ciatphdev/firebase-users-server/tags
    | DOCKERHUB_USERNAME | Docker Hub username |
    | DOCKERHUB_TOKEN | Deploy token for the Docker Hub account |
 
+2. Create Release/Tag from the `master` branch to trigger deployment to the **production** environment:
+   - Deploy front end (React) to Firebase Hosting
+   - Build and push Docker images to Docker Hub
+
+3. Inspect the contents of the `.github/workflows/release.yml` for reference.
+
 ## References
 
 [[1]](https://docs.docker.com/compose/reference/) - docker compose commands
