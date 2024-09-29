@@ -16,6 +16,7 @@ A basic web app client in the **/client** directory will show basic API usage an
   - [Docker for Production Deployment](#docker-for-production-deployment)
 - [Pre-built Server Docker Image (App)](#pre-built-server-docker-image-app)
 - [Pre-built Server Docker Image (Client + Server) Development](#pre-built-server-docker-image-client--server-development)
+- [Deploy with GitHub Actions](#deploy-with-gitHub-actions)
 - [References](#references)
 
 ## Requirements
@@ -56,6 +57,8 @@ A basic web app client in the **/client** directory will show basic API usage an
    |EMAIL_WHITELIST| Comma-separated email addresses linked to Firebase Auth UserRecords that are not allowed to be deleted or updated (write-protected)<br><br>Default value is `superadmin@gmail.com`|
    |ALLOW_CORS|Allow Cross-Origin Resource Sharing (CORS) on the API endpoints.<br><br>Default value is `1`, allowing access to domains listed in `ALLOWED_ORIGINS`. Setting to `0` will make all endpoints accept requests from all domains, including Postman.|
    |ALLOW_AUTH|Restrict access to the `POST`, `PATCH` and `DELETE` API endpoints by allowing signed-in Firebase user Bearer Authorization (Firebase token) checking.<br><br>Retrieve the signed-in Firebase token by signing in a user using the Firebase Web JS SDK `signInWithEmailAndPassword()` method, then retrieve the latest token value using `getIdTokenResult()`.<br><br>Default value is `1`. Setting to `0` will disable Bearer Authorization checking on the listed API endpoints.|
+   | CHOKIDAR_USEPOLLING | Enables hot reload on `nodemon` running inside Docker containers on a Windows host. Set it to true if running Docker Desktop with WSL2 on a Windows OS. |
+   | CHOKIDAR_INTERVAL | Chokidar polling interval. Set it along with `CHOKIDAR_USEPOLLING=true` if running Docker Desktop with WSL2 on a Windows OS. The default value is `1000`. |
 
 ### client
 
@@ -294,6 +297,34 @@ https://hub.docker.com/r/ciatphdev/firebase-users-server/tags
    docker run -it --rm --env-file .env -p 3001:3001 ciatphdev/firebase-users-server:dev
    ```
 
+## Deploy with GitHub Actions
+
+### Requirements
+
+1. Firebase project
+   - with Authentication (Email/Password) activated
+2. Docker Hub account
+
+### Steps
+
+1. Create the following GitHub Secrets:<br>
+   **client** `.env` variables
+   ```
+   REACT_APP_BASE_URL
+   REACT_APP_FIREBASE_API_KEY
+   REACT_APP_FIREBASE_AUTHDOMAIN
+   REACT_APP_FIREBASE_PROJECT_ID
+   REACT_APP_FIREBASE_STORAGE_BUCKET
+   REACT_APP_FIREBASE_MESSAGING_SENDER_ID
+   REACT_APP_FIREBASE_APP_ID
+   REACT_APP_FIREBASE_MEASUREMENT_ID
+   ```
+
+   **Docker Hub Account**
+   | GitHub Secret | Description |
+   | --- | --- |
+   | DOCKERHUB_USERNAME | Docker Hub username |
+   | DOCKERHUB_TOKEN | Deploy token for the Docker Hub account |
 
 ## References
 
