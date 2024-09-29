@@ -9,6 +9,7 @@ on:
 jobs:
   lint-client:
     name: Lint and Build client
+    if: github.event.release.target_commitish == 'master'
     runs-on: ubuntu-latest
     env:
       REACT_APP_BASE_URL: ${{ secrets.REACT_APP_BASE_URL }}
@@ -46,6 +47,7 @@ jobs:
 
   lint-server:
     name: Lint Server
+    if: github.event.release.target_commitish == 'master'
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -67,6 +69,7 @@ jobs:
 
   deploy-client:
     name: Deploy Client to Firebase Hosting
+    if: github.event.release.target_commitish == 'master'
     needs: lint-client
     runs-on: ubuntu-latest
     steps:
@@ -111,6 +114,7 @@ jobs:
   # Push the complete "app" Docker image
   docker-build-push:
     name: Deploy App to Docker Hub
+    if: github.event.release.target_commitish == 'master'
     runs-on: ubuntu-latest
     steps:
       - name: Login to Docker Hub
@@ -138,6 +142,7 @@ jobs:
   # Push the development (client/server) Docker images
   docker-build-push-dev:
     name: Deploy Development to Docker Hub
+    if: github.event.release.target_commitish == 'master'
     runs-on: ubuntu-latest
     steps:
       - name: Login to Docker Hub
