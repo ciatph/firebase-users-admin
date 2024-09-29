@@ -1,12 +1,12 @@
 {
   "projects": {
-    "default": "weaponsforge-dev"
+    "default": "users-admin-firebase"
   },
   "targets": {
-    "weaponsforge-dev": {
+    "users-admin-firebase": {
       "hosting": {
         "master": [
-          "fire-auth-users"
+          "adminusers-dev"
         ]
       }
     }
