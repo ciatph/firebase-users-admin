@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { auth, signOut } from '../../utils/firebase/firebase.config'
+import { auth, signOut } from '../../config/firebase.config'
 
 const WithAuth = (Component) => {
   function AuthAwareComponent (props) {
