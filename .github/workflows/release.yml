@@ -82,6 +82,7 @@ jobs:
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
 
   deploy-server:
+    if: ${{ vars.IS_DEPLOY_SERVER == 'heroku' }}
     name: Deploy Server to Heroku
     needs: lint-server
     runs-on: ubuntu-latest
