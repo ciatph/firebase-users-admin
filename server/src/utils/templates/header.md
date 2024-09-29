@@ -11,9 +11,9 @@ username: superadmin@gmail.com
 password: 123456789
 ```
 
-- **live client app:** [https://fire-auth-users.web.app/](https://fire-auth-users.web.app/)
+- **live client app:** [https://adminusers-dev.web.app/](https://adminusers-dev.web.app/)
 - **localhost app:** [http://localhost:3000](http://localhost:3000)
-   - Read more about the localhost environment set-up instructions on [firebase-auth-users](https://github.com/ciatph/firebase-users-admin)
+   - Read more about the localhost environment set-up instructions on [firebase-admin-users](https://github.com/ciatph/firebase-users-admin)
 
 ### Docker
 
@@ -21,9 +21,10 @@ firebase-users-admin's server component, hosting all the listed endpoints below 
 
 The server also serves a pre-built [`client`](https://github.com/ciatph/firebase-users-admin/tree/dev/client) website from a static directory using the `express.static()` middleware, following the build instructions from [**Option #2 - Client and Server Bundled in (1) Image and Service**](https://github.com/ciatph/firebase-users-admin#option-2---client-and-server-bundled-in-1-image-and-service).
 
-1. Pull the (production) **/server** [docker image](https://hub.docker.com/repository/docker/ciatphdev/firebase-users-admin-server) from Docker Hub.  
-   `docker pull ciatphdev/firebase-users-admin-app:v1.1.2`
-2. Create a `.env` file.  
+1. Pull the (production) **/server** [Docker image](https://hub.docker.com/repository/docker/ciatphdev/firebase-users-app) from Docker Hub.
+   - Find the latest version tag from https://hub.docker.com/r/ciatphdev/firebase-users-app, i.e., `v1.1.5`
+   - `docker pull ciatphdev/firebase-users-app:v1.1.5`
+2. Create a `.env` file.
    - Read [**Installation - server #3**](https://github.com/ciatph/firebase-users-admin#server) for more information.
    - Replace the variables accordingly in the `.env` file. Set `ALLOW_CORS=0` to allow `Same Origin` requests. Read [**Option #2 - Client and Server Bundled in (1) Image and Service**](https://github.com/ciatph/firebase-users-admin#option-2---client-and-server-bundled-in-1-image-and-service) for more information.
       ```
@@ -39,20 +40,46 @@ The server also serves a pre-built [`client`](https://github.com/ciatph/firebase
    docker run -it --rm \
       --env-file .env
       -p 3001:3001 \
-      ciatphdev/firebase-users-admin-app:v1.1.2
+      ciatphdev/firebase-users-admin-app:v1.1.5
    ```
-4. Run a script in the container to create the default `superadmin@gmail.com` account, if it does not yet exist in the Firestore database.  
+4. Run a script in the container to create the default `superadmin@gmail.com` account, if it does not yet exist in the Firestore database.
    `docker exec -it firebase-users-admin-app npm run seed`
-5. Launch the server API documentation on  
+5. Launch the server API documentation on
 `http://localhost:3001/docs`
 6. Launch the client website on `http://localhost:3001`.
-   - Login using the superadmin account create on step # 4.  
+   - Login using the superadmin account create on step # 4.
       ```
 	  username: superadmin@gmail.com
 	  password: 123456789
 	  ```
    - Test the API routes by creating new accounts, editing or deleting existing accounts.
    - The signed-in user's Firebase Auth token is available on the **Home** page (http://localhost:3001/)
+
+### Pre-built Server Docker Image (Client + Server) Development
+
+Pre-built Docker images of the **server** and **client** for local development are also available on Docker Hub at:
+
+- **client**<br>
+https://hub.docker.com/r/ciatphdev/firebase-users-client/tags
+
+- **server**<br>
+https://hub.docker.com/r/ciatphdev/firebase-users-server/tags
+
+### Usage Options
+
+- Use with the docker-compose.dev.yml file (requires a `.env` file input parameter):<br>
+`docker compose -f docker-compose.dev.yml pull`
+
+- Docker pull<br>
+   ```
+   docker pull ciatphdev/firebase-users-client:dev
+   docker pull ciatphdev/firebase-users-server:dev
+   ```
+- Docker run (requires a `.env` file input parameter):<br>
+   ```
+   docker run -it --rm --env-file .env -p 3000:3000 ciatphdev/firebase-users-client:dev
+   docker run -it --rm --env-file .env -p 3001:3001 ciatphdev/firebase-users-server:dev
+   ```
 
 ### References
 
