@@ -14,7 +14,8 @@ A basic web app client in the **/client** directory will show basic API usage an
   - [Docker Dependencies](#docker-dependencies)
   - [Docker for Localhost Development](#docker-for-localhost-development)
   - [Docker for Production Deployment](#docker-for-production-deployment)
-- [Pre-built Server Docker Image](#pre-built-server-docker-image)
+- [Pre-built Server Docker Image](#pre-built-server-docker-image-app)
+- [Pre-built Server Docker Image](#pre-built-server-docker-image-client--server-development)
 - [References](#references)
 
 ## Requirements
