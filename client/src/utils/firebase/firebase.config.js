@@ -7,14 +7,13 @@ import { getAuth, signOut, signInWithEmailAndPassword } from 'firebase/auth'
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey: 'AIzaSyBMgidvWJ00nJipz4MCl5U8FmfH6juJKpo',
-  authDomain: 'weaponsforge-dev.firebaseapp.com',
-  databaseURL: 'https://weaponsforge-dev.firebaseio.com',
-  projectId: 'weaponsforge-dev',
-  storageBucket: 'weaponsforge-dev.appspot.com',
-  messagingSenderId: '90348836363',
-  appId: '1:90348836363:web:ab5537dd4d6a81c6e6190e',
-  measurementId: 'G-88GJJN6TD4'
+  apiKey: 'AIzaSyB1SivNCSCPXFV4v4FhE-Ll2av8nHEWr-8',
+  authDomain: 'users-admin-firebase.firebaseapp.com',
+  projectId: 'users-admin-firebase',
+  storageBucket: 'users-admin-firebase.appspot.com',
+  messagingSenderId: '761515421472',
+  appId: '1:761515421472:web:d7c737ba274515297f3145',
+  measurementId: 'G-ZCWY6YX0P0'
 }
 
 // Initialize Firebase
