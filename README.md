@@ -14,8 +14,8 @@ A basic web app client in the **/client** directory will show basic API usage an
   - [Docker Dependencies](#docker-dependencies)
   - [Docker for Localhost Development](#docker-for-localhost-development)
   - [Docker for Production Deployment](#docker-for-production-deployment)
-- [Pre-built Server Docker Image](#pre-built-server-docker-image-app)
-- [Pre-built Server Docker Image](#pre-built-server-docker-image-client--server-development)
+- [Pre-built Server Docker Image (App)](#pre-built-server-docker-image-app)
+- [Pre-built Server Docker Image (Client + Server) Development](#pre-built-server-docker-image-client--server-development)
 - [References](#references)
 
 ## Requirements
@@ -82,6 +82,7 @@ A basic web app client in the **/client** directory will show basic API usage an
    | REACT_APP_FIREBASE_MESSAGING_SENDER_ID | Firebase web messaging sender ID from the Firebase Project Settings configuration file. |
    | REACT_APP_FIREBASE_APP_ID | Firebase web web app key from the Firebase Project Settings configuration file. |
    | REACT_APP_FIREBASE_MEASUREMENT_ID | Firebase web measurement ID from the Firebase Project Settings configuration file. |
+   | WATCHPACK_POLLING | Enables hot reload on React apps running inside Docker containers on a Windows host. Set it to `true` if running Docker Desktop with WSL2 on a Windows OS. |
 
 4. Run the app in development mode.
 `npm start`
