@@ -269,8 +269,29 @@ The server also serves the pre-built `client` website from a static directory us
 
 ## Pre-built Server Docker Image (Client + Server) Development
 
-Pre-built Docker images of the **server** and **client** are also available on Docker Hub at:<br>
-https://hub.docker.com/repository/docker/ciatphdev/firebase-users-admin-app
+Pre-built Docker images of the **server** and **client** for local development are also available on Docker Hub at:
+
+- **client**<br>
+https://hub.docker.com/r/ciatphdev/firebase-users-client/tags
+
+- **server**<br>
+https://hub.docker.com/r/ciatphdev/firebase-users-server/tags
+
+### Usage Options
+
+- Use with the docker-compose.dev.yml file (requires a `.env` file inside the client and server folders):<br>
+`docker compose -f docker-compose.dev.yml pull`
+
+- Docker pull<br>
+   ```
+   docker pull ciatphdev/firebase-users-client:dev
+   docker pull ciatphdev/firebase-users-server:dev
+   ```
+- Docker run (requires a `.env` file inside the client and server folders):<br>
+   ```
+   docker run -it --rm --env-file .env -p 3000:3000 ciatphdev/firebase-users-client:dev
+   docker run -it --rm --env-file .env -p 3001:3001 ciatphdev/firebase-users-server:dev
+   ```
 
 
 ## References
