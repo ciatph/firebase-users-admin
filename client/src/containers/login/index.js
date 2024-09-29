@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
-import { auth, signInWithEmailAndPassword } from '../../utils/firebase/firebase.config'
+import { auth, signInWithEmailAndPassword } from '../../config/firebase.config'
 import Login from '../../components/common/form'
 import AlertMessage from '../../components/common/alert_message'
 

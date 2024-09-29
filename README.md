@@ -23,7 +23,7 @@ A basic web app client in the **/client** directory will show basic API usage an
 2. NodeJS v14.18.3 or higher
 3. Firebase Project [[link]](https://firebase.google.com/)
    - Pricing Plan: Spark plan or higher
-   - with the **Email/Password** Provider enabled in the Firebase Console's   
+   - with the **Email/Password** Provider enabled in the Firebase Console's
 **Authentication** -> **Sign-in method** -> **Sign-in providers** options.
    - Service account credentials JSON file
 
@@ -38,14 +38,14 @@ A basic web app client in the **/client** directory will show basic API usage an
 
 ### server
 
-1. Clone this repository.  
+1. Clone this repository.<br>
 `git clone https://github.com/ciatph/firebase-users-admin.git`
-2. Install dependencies.  
+2. Install dependencies.
    ```
    cd server
    npm install
    ```
-3. Set up the environment variables. Create a `.env` file inside the **/server** directory with reference to the `.env.example` file. Encode your own Firebase project settings on the following variables:  
+3. Set up the environment variables. Create a `.env` file inside the **/server** directory with reference to the `.env.example` file. Encode your own Firebase project settings on the following variables:
 
    | Variable Name | Description |
    | --- | --- |
@@ -63,34 +63,44 @@ A basic web app client in the **/client** directory will show basic API usage an
    cd client
    npm install
    ```
-2. Replace the `/client/utils/firebase/firebase.config.js` file with your own Firebase project's web SDK setup configuration file.
-   - You can find this file in a Firebase project's  
+2. Replace the `/client/config/firebase.config.js` file with your own Firebase project's web SDK setup configuration file.
+   - You can find this file in a Firebase project's
 **Project Settings** -> **General** -> **Web apps** (Add an app if needed) -> **SDK setup and configuration**
    - The `firebase.config.js` settings must match with the `FIREBASE_SERVICE_ACC` environment variable defined on **server - step # 3.**
-3. Create a `/client/.env` file from the `/client/.env.example` file. Replace the `REACT_APP_BASE_URL` variable with an appropriate value.  
+3. Create a `/client/.env` file from the `/client/.env.example` file.
+   - Replace the `REACT_APP_BASE_URL` variable with an appropriate value.
+   - Replace the `REACT_APP_FIREBASE_*` set of variables with your own Firebase project configuration that matches the **server** variables: `FIREBASE_SERVICE_ACC` and `FIREBASE_PRIVATE_KEY`. These variables, using default values from this repository's Firebase project will not work with your **server** Firebase variables.
 
    | Variable Name | Description |
    | --- | --- |
    |REACT_APP_BASE_URL|Domain on which the CRUD API is running.<br><br> Default value is `http://localhost:3001/api` on localhost. See the [server](#server) set-up instructions for more information.|
-4. Run the app in development mode.  
+   | REACT_APP_FIREBASE_API_KEY | Firebase web API key from the Firebase Project Settings configuration file. |
+   | REACT_APP_FIREBASE_AUTHDOMAIN | Firebase web auth domain key from the Firebase Project Settings configuration file. |
+   | REACT_APP_FIREBASE_PROJECT_ID | Firebase web project ID from the Firebase Project Settings configuration file. |
+   | REACT_APP_FIREBASE_STORAGE_BUCKET | Firebase web storage bucket key from the Firebase Project Settings configuration file. |
+   | REACT_APP_FIREBASE_MESSAGING_SENDER_ID | Firebase web messaging sender ID from the Firebase Project Settings configuration file. |
+   | REACT_APP_FIREBASE_APP_ID | Firebase web web app key from the Firebase Project Settings configuration file. |
+   | REACT_APP_FIREBASE_MEASUREMENT_ID | Firebase web measurement ID from the Firebase Project Settings configuration file. |
+
+4. Run the app in development mode.
 `npm start`
-5. Launch the client app in:  
+5. Launch the client app in:
 `http://localhost:3000`
 
 
 ## Usage
 
 1. Navigate to the `/server` directory.
-2. Create a default Firebase Auth user.  
+2. Create a default Firebase Auth user.
 `npm run seed`
-3. Generate the API documentation.  
+3. Generate the API documentation.
 `npm run gen:docs`
-4. Run the app:  
+4. Run the app:
    - (development mode) `npm run dev`
    - (production mode) `npm start`
-5. Read the API documentation and usage examples guide of available CRUD API endpoints on:  
+5. Read the API documentation and usage examples guide of available CRUD API endpoints on:
 `http://localhost:3001/docs`
-6. Try to log-in to the `/client` app using the default superadmin seeded user from step no. 2:  
+6. Try to log-in to the `/client` app using the default superadmin seeded user from step no. 2:
    ```
    username: superadmin@gmail.com
    password: 123456789
@@ -117,7 +127,7 @@ Builds the API documentation. The static website documentation files are put in 
 
 ### `npm run seed`
 
-Creates an initial **superadmin** Firebase Authentication user with the credentials:  
+Creates an initial **superadmin** Firebase Authentication user with the credentials:
 
 ```
 email: superadmin@gmail.com
@@ -130,7 +140,7 @@ account_level: 1
 
 Copies the built `/client` website from `/client/build` to the server's root directory.
 
-- It requires to build the client app first, after following its set-up [instructions](#client):  
+- It requires to build the client app first, after following its set-up [instructions](#client):
    ```
    cd client
    npm run build
@@ -153,23 +163,22 @@ The following dependencies are used to build and run the image. Please feel feel
 ### Docker for Localhost Development
 
 1. Set-up the environment variables and firebase configuration file for the **/client** app.
-   - Create (your own) `firebase.config.js` file under `/client/utils/firebase/firebase.config.js` as advised on [**Installation - client # 2**](#client).
    - Create the `.env` file under the **/client** directory as advised on [**Installation - client # 3**](#client).
 2. Set-up the environment variables for the **/server** app.
    - Create the `.env` file under the **/server** directory as advised on [**Installation - server # 3**](#server).
-3. Build the client and server docker services for localhost development.  
+3. Build the client and server docker services for localhost development.
    - `docker-compose -f docker-compose-dev.yml build`
    - > **INFO:** Building the images for localhost development takes a while, around ~7min+.
-4. Create and start the client and server containers.  
+4. Create and start the client and server containers.
 `docker-compose -f docker-compose-dev.yml up`
-5. Run a script in the container to create the default `superadmin@gmail.com` account, if it does not yet exist in the Firestore database.  
+5. Run a script in the container to create the default `superadmin@gmail.com` account, if it does not yet exist in the Firestore database.
    `docker exec -it server-prod npm run seed`
-6. Launch the dockerized (dev) client app on  
+6. Launch the dockerized (dev) client app on
 `http://localhost:3000`
-7. Launch the dockerized (dev) server app's API documentation on  
+7. Launch the dockerized (dev) server app's API documentation on
 `http://localhost:3001/docs`
 8. Edit source the codes in `/client/src` or `/server/src` as needed. Verify that hot reload is working on both the client and server apps.
-9. Stop and remove containers, networks, images and volumes:  
+9. Stop and remove containers, networks, images and volumes:
 `docker-compose -f docker-compose-dev.yml down`
 
 ### Docker for Production Deployment
@@ -179,50 +188,55 @@ The following dependencies are used to build and run the image. Please feel feel
 The following docker-compose commands build small `client` and `server` images targeted for creating optimized dockerized apps running on self-managed production servers. An **Nginx** service serves the frontend `client` on port `3000`. The `server`, running on a separate **Nodejs (pm2)** service, is also served by the client's Nginx service in a reverse proxy on port `3001`.  Hot reload is not available when editing source codes from `/client/src` or `/server/src`.
 
 1. Install and set up the required **client** and **server** environment variables as with the required variables on [**Docker for Localhost Development**](#docker-for-localhost-development).
-2. Build the client and server docker services for production deployment.  
+2. Build the client and server docker services for production deployment.
    - `docker-compose -f docker-compose-prod.yml build`
-3. Create and start the containers.  
+3. Create and start the containers.
    - `docker-compose -f docker-compose-prod.yml up`
-4. Run a script in the container to create the default `superadmin@gmail.com` account, if it does not yet exist in the Firestore database.  
+4. Run a script in the container to create the default `superadmin@gmail.com` account, if it does not yet exist in the Firestore database.
    - `docker exec -it server-prod npm run seed`
-5. Launch the dockerized (prod) client app on  
+5. Launch the dockerized (prod) client app on
 `http://localhost:3000`
-6. Launch the dockerized (prod) server app's API documentation on  
+6. Launch the dockerized (prod) server app's API documentation on
 `http://localhost:3001/docs`
-7. Stop and remove containers, networks, images and volumes:  
+7. Stop and remove containers, networks, images and volumes:
    - `docker-compose -f docker-compose-prod.yml down`
-   
+
 #### Option #2 - Client and Server Bundled in (1) Image and Service
 
-The following docker-compose commands build a small `server` image targeted for creating an optimized dockerized Express app running on self-managed production servers. The frontend `client` is served in an a static directory using the Express static middleware.  
+The following docker-compose commands build a small `server` image targeted for creating an optimized dockerized Express app running on self-managed production servers. The frontend `client` is served in an a static directory using the Express static middleware.
 
 1. Install and set up the required **client** and **server** environment variables as with the required variables on [**Docker for Localhost Development**](#docker-for-localhost-development).
-   - > **INFO:** This build method requires CORS checking dissabled, since the client and server will run on the same port (3001).   
-     > - Disable CORS by setting `ALLOW_CORS=0` in the **.env** file to avoid `Same Origin` errors.  
-2. Build the client and server docker services for production deployment.  
+   - > **INFO:** This build method requires CORS checking dissabled, since the client and server will run on the same port (3001).
+     > - Disable CORS by setting `ALLOW_CORS=0` in the **.env** file to avoid `Same Origin` errors.
+2. Build the client and server docker services for production deployment.
    - `docker-compose -f docker-compose-app.yml build`
-3. Create and start the containers.  
+3. Create and start the containers.
    - `docker-compose -f docker-compose-app.yml up`
-4. Run a script in the container to create the default `superadmin@gmail.com` account, if it does not yet exist in the Firestore database.  
+4. Run a script in the container to create the default `superadmin@gmail.com` account, if it does not yet exist in the Firestore database.
    - `docker exec -it firebase-users-admin-app npm run seed`
-5. Launch the dockerized (prod) client + server app on  
+5. Launch the dockerized (prod) client + server app on
 `http://localhost:3000`
-6. Launch the dockerized (prod) client + server app API documentation on  
+6. Launch the dockerized (prod) client + server app API documentation on
 `http://localhost:3001/docs`
-7. Stop and remove containers, networks, images and volumes:  
+7. Stop and remove containers, networks, images and volumes:
    - `docker-compose -f docker-compose-app.yml down`
 
-## Pre-built Server Docker Image
+## Pre-built Server Docker Image App
 
 The `server` component of **firebase-users-admin** is available as a stand-alone docker image on Docker Hub with customizable environment variables (.env file).
 
 The server also serves the pre-built `client` website from a static directory using the `express.static()` middleware, following the build instructions from [**Option #2 - Client and Server Bundled in (1) Image and Service**](#option-2---client-and-server-bundled-in-1-image-and-service).
 
+> [!WARNING]
+> While the pre-built Docker image runs both **client** and **server** apps, the **client** only works for this code repository at **ciatph/firebase-users-admin**, since it uses the repository's specific Firebase config settings during **client** (React) build.
+
 ### Steps
 
-1. Pull the (production) **/server** [docker image](https://hub.docker.com/repository/docker/ciatphdev/firebase-users-admin-app) from Docker Hub.  
-   `docker pull ciatphdev/firebase-users-admin-app:v1.1.2`
-2. Create a `.env` file.  
+1. Pull the (production) **/server** [Docker image](https://hub.docker.com/repository/docker/ciatphdev/firebase-users-app) from Docker Hub.
+   - Find the latest version tag from https://hub.docker.com/r/ciatphdev/firebase-users-app, i.e., `v1.1.5`
+   - `docker pull ciatphdev/firebase-users-app:v1.1.5`
+   - **NOTE:**
+2. Create a `.env` file.
    - Read [**Installation - server #3**](#server) for more information.
    - Replace the variables accordingly in the `.env` file. Set `ALLOW_CORS=0` to allow `Same Origin` requests. Read [**Option #2 - Client and Server Bundled in (1) Image and Service**](#option-2---client-and-server-bundled-in-1-image-and-service) for more information.
       ```
@@ -240,12 +254,12 @@ The server also serves the pre-built `client` website from a static directory us
       -p 3001:3001 \
       ciatphdev/firebase-users-admin-app:v1.1.2
    ```
-4. Run a script in the container to create the default `superadmin@gmail.com` account, if it does not yet exist in the Firestore database.  
+4. Run a script in the container to create the default `superadmin@gmail.com` account, if it does not yet exist in the Firestore database.
    `docker exec -it firebase-users-admin-app npm run seed`
-5. Launch the server API documentation on  
+5. Launch the server API documentation on
 `http://localhost:3001/docs`
 6. Launch the client website on `http://localhost:3001`.
-   - Login using the superadmin account create on step # 4.  
+   - Login using the superadmin account create on step # 4.
       ```
 	  username: superadmin@gmail.com
 	  password: 123456789
@@ -253,11 +267,15 @@ The server also serves the pre-built `client` website from a static directory us
    - Test the API routes by creating new accounts, editing or deleting existing accounts.
    - The signed-in user's Firebase Auth token is available on the **Home** page (http://localhost:3001/)
 
+## Pre-built Server Docker Image (Client + Server) Development
+
+Pre-built Docker images of the **server** and **client** are also available on Docker Hub at:<br>
+https://hub.docker.com/repository/docker/ciatphdev/firebase-users-admin-app
 
 
 ## References
 
 [[1]](https://docs.docker.com/compose/reference/) - docker compose commands
 
-@ciatph  
+@ciatph
 20220406

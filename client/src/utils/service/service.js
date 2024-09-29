@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { auth } from '../firebase/firebase.config'
+import { auth } from '../../config/firebase.config'
 
 export default class Service {
   constructor () {
