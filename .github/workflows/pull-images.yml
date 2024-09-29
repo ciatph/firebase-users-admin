@@ -1,0 +1,22 @@
+# Pull the Docker images from Docker Hub on schedule
+name: Pull Docker Images
+
+on:
+  schedule:
+    - cron: '0 */2 * * *' # test Docker pull every 2 hrs
+    # Runs "At 00:00 on day-of-month 1 in every 2nd month."
+    # - cron: '0 0 1 */2 *'
+
+jobs:
+  pull-images:
+    name: Pull App Image
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the repository
+        uses: actions/checkout@v3
+        with:
+          ref: 'master'
+      - name: Pull App Image
+        run: docker compose -f docker-compose.app.yml pull
+      - name: Pull Development Images
+        run: docker compose -f docker-compose.dev.yml pull
