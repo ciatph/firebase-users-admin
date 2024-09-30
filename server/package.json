@@ -11,7 +11,7 @@
     "pm2": "pm2 start process.json --no-daemon",
     "start": "node src/index.js",
     "build": "npm run gen:docs",
-    "dev": "nodemon watch src/index.js",
+    "dev": "nodemon --inspect=0.0.0.0:9229 src/index.js",
     "seed": "node src/scripts/seeder.js",
     "lint": "eslint src --ignore-path .gitignore",
     "lint:fix": "eslint --ignore-path .gitignore --fix src",
