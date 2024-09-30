@@ -27,11 +27,6 @@ jobs:
           cp client/.env.example client/.env
           cp server/.env.example server/.env
 
-      - name: Create temporary env variables
-        run: |
-          cp client/.env.example client/.env
-          cp server/.env.example server/.env
-
       - name: Pull App Image
         run: docker compose -f docker-compose.app.yml pull
 
