@@ -21,6 +21,7 @@ jobs:
           LATEST_TAG=$(git describe --tags `git rev-list --tags --max-count=1`)
           echo "Checking out latest tag: $LATEST_TAG"
           git checkout $LATEST_TAG
+          echo "LATEST_TAG=$LATEST_TAG" >> $GITHUB_ENV
 
       - name: Create temporary env variables
         run: |
@@ -28,7 +29,9 @@ jobs:
           cp server/.env.example server/.env
 
       - name: Pull App Image
-        run: docker compose -f docker-compose.app.yml pull
+        run: |
+          sed -i "s/:latest/:$LATEST_TAG/" docker-compose.app.yml
+          docker compose -f docker-compose.app.yml pull
 
       - name: Pull Development Images
         run: docker compose -f docker-compose.dev.yml pull
