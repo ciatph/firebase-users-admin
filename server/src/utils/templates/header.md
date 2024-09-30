@@ -22,8 +22,8 @@ firebase-users-admin's server component, hosting all the listed endpoints below 
 The server also serves a pre-built [`client`](https://github.com/ciatph/firebase-users-admin/tree/dev/client) website from a static directory using the `express.static()` middleware, following the build instructions from [**Option #2 - Client and Server Bundled in (1) Image and Service**](https://github.com/ciatph/firebase-users-admin#option-2---client-and-server-bundled-in-1-image-and-service).
 
 1. Pull the (production) **/server** [Docker image](https://hub.docker.com/repository/docker/ciatphdev/firebase-users-app) from Docker Hub.
-   - Find the latest version tag from https://hub.docker.com/r/ciatphdev/firebase-users-app, i.e., `v1.1.5`
-   - `docker pull ciatphdev/firebase-users-app:v1.1.5`
+   - Find the latest version tag from https://hub.docker.com/r/ciatphdev/firebase-users-app, i.e., `v1.1.6`
+   - `docker pull ciatphdev/firebase-users-app:v1.1.6`
 2. Create a `.env` file.
    - Read [**Installation - server #3**](https://github.com/ciatph/firebase-users-admin#server) for more information.
    - Replace the variables accordingly in the `.env` file. Set `ALLOW_CORS=0` to allow `Same Origin` requests. Read [**Option #2 - Client and Server Bundled in (1) Image and Service**](https://github.com/ciatph/firebase-users-admin#option-2---client-and-server-bundled-in-1-image-and-service) for more information.
@@ -40,7 +40,7 @@ The server also serves a pre-built [`client`](https://github.com/ciatph/firebase
    docker run -it --rm \
       --env-file .env
       -p 3001:3001 \
-      ciatphdev/firebase-users-admin-app:v1.1.5
+      ciatphdev/firebase-users-admin-app:v1.1.6
    ```
 4. Run a script in the container to create the default `superadmin@gmail.com` account, if it does not yet exist in the Firestore database.
    `docker exec -it firebase-users-admin-app npm run seed`
