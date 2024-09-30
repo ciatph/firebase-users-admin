@@ -3,9 +3,8 @@ name: Pull Docker Images
 
 on:
   schedule:
-    - cron: '0 */2 * * *' # test Docker pull every 2 hrs
     # Runs "At 00:00 on day-of-month 1 in every 2nd month."
-    # - cron: '0 0 1 */2 *'
+    - cron: '0 0 1 */2 *'
 
 jobs:
   pull-images:
