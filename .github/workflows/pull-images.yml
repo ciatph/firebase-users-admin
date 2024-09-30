@@ -14,9 +14,26 @@ jobs:
     steps:
       - name: Checkout the repository
         uses: actions/checkout@v3
-        with:
-          ref: 'master'
+
+      - name: Fetch and check out latest tag
+        run: |
+          git fetch --tags
+          LATEST_TAG=$(git describe --tags `git rev-list --tags --max-count=1`)
+          echo "Checking out latest tag: $LATEST_TAG"
+          git checkout $LATEST_TAG
+
+      - name: Create temporary env variables
+        run: |
+          cp client/.env.example client/.env
+          cp server/.env.example server/.env
+
+      - name: Create temporary env variables
+        run: |
+          cp client/.env.example client/.env
+          cp server/.env.example server/.env
+
       - name: Pull App Image
         run: docker compose -f docker-compose.app.yml pull
+
       - name: Pull Development Images
         run: docker compose -f docker-compose.dev.yml pull
