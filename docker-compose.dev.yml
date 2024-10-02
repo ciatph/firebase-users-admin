@@ -2,7 +2,7 @@ services:
   # Create React App (CRA) running on development mode
   client-dev:
     container_name: client-dev
-    image: ciatphdev/firebase-users-client:dev
+    image: ciatphdev/firebase-users-client:latest
     env_file:
       - ./client/.env
     build:
@@ -20,7 +20,7 @@ services:
   # Express app running in development mode with auto reload using nodemon
   server-dev:
     container_name: server-dev
-    image: ciatphdev/firebase-users-server:dev
+    image: ciatphdev/firebase-users-server:latest
     env_file:
       - ./server/.env
     build:

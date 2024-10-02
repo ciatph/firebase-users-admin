@@ -120,7 +120,7 @@ jobs:
 
   # Push the complete "app" Docker image
   docker-build-push:
-    name: Deploy App to Docker Hub
+    name: Push App Docker
     if: github.event.release.target_commitish == 'master'
     runs-on: ubuntu-latest
     steps:
@@ -148,7 +148,7 @@ jobs:
 
   # Push the development (client/server) Docker images
   docker-build-push-dev:
-    name: Deploy Development to Docker Hub
+    name: Push Dev Docker
     if: github.event.release.target_commitish == 'master'
     runs-on: ubuntu-latest
     steps:
