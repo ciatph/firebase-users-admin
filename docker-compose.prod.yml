@@ -4,7 +4,7 @@ services:
   # Build Create React App (CRA) website running on nginx container
   client-prod:
     container_name: client-prod
-    image: ciatphdev/firebase-users-client:latest
+    image: ciatphdev/firebase-users-client:prod
     restart: always
     env_file:
       - ./client/.env
@@ -20,7 +20,7 @@ services:
   # Express app (backend only) that restarts itself on errors using pm2
   server-prod:
     container_name: server-prod
-    image: ciatphdev/firebase-users-server:latest
+    image: ciatphdev/firebase-users-server:prod
     restart: always
     env_file:
       - ./server/.env

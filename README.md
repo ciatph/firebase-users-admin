@@ -288,13 +288,13 @@ https://hub.docker.com/r/ciatphdev/firebase-users-server/tags
 
 - Docker pull<br>
    ```
-   docker pull ciatphdev/firebase-users-client:dev
-   docker pull ciatphdev/firebase-users-server:dev
+   docker pull ciatphdev/firebase-users-client:latest
+   docker pull ciatphdev/firebase-users-server:latest
    ```
 - Docker run (requires a `.env` file input parameter):<br>
    ```
-   docker run -it --rm --env-file .env -p 3000:3000 ciatphdev/firebase-users-client:dev
-   docker run -it --rm --env-file .env -p 3001:3001 ciatphdev/firebase-users-server:dev
+   docker run -it --rm --env-file .env -p 3000:3000 ciatphdev/firebase-users-client:latest
+   docker run -it --rm --env-file .env -p 3001:3001 ciatphdev/firebase-users-server:latest
    ```
 
 ## Deploy with GitHub Actions
