@@ -27,11 +27,12 @@ A basic web app client in the **/client** directory will show basic API usage an
    - Pricing Plan: Spark plan or higher
    - with the **Email/Password** Provider enabled in the Firebase Console's
 **Authentication** -> **Sign-in method** -> **Sign-in providers** options.
+   - with **Firebase (Web) Application** enabled in the Firebase Console's **Project Settings** -> **Your Apps**
    - Service account credentials JSON file
 
 ### Core Libraries and Frameworks
 
-1. [firebase-admin](https://www.npmjs.com/package/firebase-admin) v10.0.2
+1. [Firebase-admin](https://www.npmjs.com/package/firebase-admin) v10.0.2
 2. [Firebase Authentication](https://firebase.google.com/docs/auth) (using Email/Password Provider)
 3. React 18.1.0 (CRA) on client app
 
@@ -273,36 +274,43 @@ The server also serves the pre-built `client` website from a static directory us
 
 ## Pre-built Server Docker Image (Client + Server) Development
 
-Pre-built Docker images of the **server** and **client** for local development are also available on Docker Hub at:
+This project also deploys the latest **client** and **server** development Docker images to Docker Hub on the creation of new Release/Tags. Pre-built Docker images for local development are available on Docker Hub at:
 
-- **client**<br>
-https://hub.docker.com/r/ciatphdev/firebase-users-client/tags
+https://hub.docker.com/r/ciatphdev/firebase-users-admin
 
-- **server**<br>
-https://hub.docker.com/r/ciatphdev/firebase-users-server/tags
 
-### Usage Options
+1. Pull the pre-built development Docker images using any of the two (2) options:
+   - Navigate to the gsites-components root project directory, then run:<br>
+   `docker compose -f docker-compose.dev.yml pull`
+   - Open a terminal and run:<br>
+      ```
+      docker pull ciatphdev/firebase-users-admin:client
+      docker pull ciatphdev/firebase-users-admin:server
+      ```
 
-- Use with the docker-compose.dev.yml file (requires a `.env` file input parameter):<br>
-`docker compose -f docker-compose.dev.yml pull`
+2. Follow the instructions in the README files inside the **/client** and **/server** directories for more information on configuring and using the client and server apps.
 
-- Docker pull<br>
-   ```
-   docker pull ciatphdev/firebase-users-client:latest
-   docker pull ciatphdev/firebase-users-server:latest
-   ```
-- Docker run (requires a `.env` file input parameter):<br>
-   ```
-   docker run -it --rm --env-file .env -p 3000:3000 ciatphdev/firebase-users-client:latest
-   docker run -it --rm --env-file .env -p 3001:3001 ciatphdev/firebase-users-server:latest
-   ```
+3. Run the development images using any of the two (2) options (requires a `.env` file input parameter):
+   - Run with Docker compose:<br>
+   `docker compose -f docker-compose.dev.yml up`
+   - Run with Docker:<br>
+      ```
+      docker run -it --rm --env-file .env -p 3000:3000 ciatphdev/firebase-users-admin:client
+      docker run -it --rm --env-file .env -p 3001:3001 ciatphdev/firebase-users-admin:server
+      ```
 
 ## Deploy with GitHub Actions
+
+Deployment with GitHub Actions to live environments and Docker Hub is optional. Supply the following **GitHub Secrets** and **GitHUb Variables** if there is a need to deploy and push the client and server apps to live environments.
+
+> [!INFO]
+> Live server deployment to a new cloud hosting provider is currently under construction. Previous versions used to deploy it in a free-tier Heroku server.
 
 ### Requirements
 
 1. Firebase project
    - with Authentication (Email/Password) activated
+   - with Firebase Hosting activated (Refer to the `/client/.firebaserc` file for more information about the project structure)
 2. Docker Hub account
 
 ### Steps
@@ -325,6 +333,10 @@ https://hub.docker.com/r/ciatphdev/firebase-users-server/tags
    | --- | --- |
    | DOCKERHUB_USERNAME | Docker Hub username |
    | DOCKERHUB_TOKEN | Deploy token for the Docker Hub account |
+
+   | GitHub Variable | Description |
+   | --- | --- |
+   | DOCKERHUB_USERNAME | Docker Hub username |
 
 2. Create Release/Tag from the `master` branch to trigger deployment to the **production** environment:
    - Deploy front end (React) to Firebase Hosting

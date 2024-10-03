@@ -149,7 +149,7 @@ jobs:
   # Push the development (client/server) Docker images
   docker-build-push-dev:
     name: Push Dev Docker
-    if: github.event.release.target_commitish == 'master'
+    if: github.event.release.target_commitish == 'master' && vars.DOCKERHUB_USERNAME != ''
     runs-on: ubuntu-latest
     steps:
       - name: Login to Docker Hub
